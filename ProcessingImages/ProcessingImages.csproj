@@ -30,7 +30,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 		<GenerateAppInstallerFile>True</GenerateAppInstallerFile>
 		<AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-		<PackageCertificateThumbprint>C4C2EF43D19B9191F80827920B0E2D701F81DCB0</PackageCertificateThumbprint>
+		<PackageCertificateThumbprint>00F8B88D16B6A06EC8A03007906BA5B7B83B014F</PackageCertificateThumbprint>
 		<AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
 		<AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
 		<AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
@@ -58,6 +58,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="DynamicLanguageRuntime" Version="1.3.4" />
+		<PackageReference Include="IronPython" Version="3.4.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="System.Drawing.Common" Version="7.0.0" />
 	</ItemGroup>
