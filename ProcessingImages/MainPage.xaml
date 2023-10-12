@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProcessingImages.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+
+            <Image
+                x:Name="label"
+                SemanticProperties.Description="Imag of the crystal"
+                HorizontalOptions="Center" />
+
+            <Label
+                Text="Исследование кристаллов методами фрактального анализа"
+                SemanticProperties.HeadingLevel="Level4"
+                FontSize="32"
+                HorizontalOptions="Center" />
+
+            <Button
+                x:Name="FilePickerBtn"
+                Text="Выбрать изображение"
+                SemanticProperties.Hint="Select file"
+                Clicked="OnFilePickerClicked"
+                HorizontalOptions="Center" />
+
+            <StackLayout RadioButtonGroup.GroupName="methods">
+                <Label x:Name="header" Text="Выберите метод фрактального анализа для исследования изображения" />
+                <RadioButton Content="MFS" Value="MFS" IsChecked="True" CheckedChanged="OnMethodCheckedChanged"/>
+                <RadioButton Content="Density" Value="Density" CheckedChanged="OnMethodCheckedChanged"/>
+                <RadioButton Content="Renyi" Value="Renyi" CheckedChanged="OnMethodCheckedChanged"/>
+                <Button x:Name="MethodButton" Text="Начать исследование" Clicked="OnMethodClicked"/>
+            </StackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
