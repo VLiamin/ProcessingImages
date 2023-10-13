@@ -11,7 +11,7 @@
 
             <Image
                 x:Name="label"
-                SemanticProperties.Description="Imag of the crystal"
+                SemanticProperties.Description="Image of the crystal"
                 HorizontalOptions="Center" />
 
             <Label
