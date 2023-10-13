@@ -7,6 +7,7 @@ namespace ProcessingImages
     public partial class MainPage : ContentPage
     {
         private static Bitmap image;
+        private static string imagePath;
         private static object radioButton = "MFS";
 
         public MainPage()
@@ -28,6 +29,7 @@ namespace ProcessingImages
                 label.Source = fileResult.FullPath;
                 label.HeightRequest = 200;
                 image = new Bitmap(fileResult.FullPath);
+                imagePath = fileResult.FullPath;
 
                 if (fileResult is not null)
                 {
@@ -78,7 +80,7 @@ namespace ProcessingImages
                     await Navigation.PushAsync(new MFSPage(image));
                     break;
                 case "Renyi":
-                    await Navigation.PushAsync(new RenyiPage(image));
+                    await Navigation.PushAsync(new RenyiPage(image, imagePath));
                     break;
             }
         }
