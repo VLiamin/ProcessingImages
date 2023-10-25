@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using System.Drawing.Imaging;
 using System.Net.Http.Headers;
 
 namespace ProcessingImages
@@ -76,7 +75,7 @@ namespace ProcessingImages
 
             switch (radioButton.ToString())
             {
-                case "MFS":
+                case "Minkowski":
                     await Navigation.PushAsync(new MFSPage(image));
                     break;
                 case "Renyi":
@@ -91,9 +90,9 @@ namespace ProcessingImages
 
             if (header is not null)
             {
-                header.Text = $"Выбранный метод фрактального анализа изображения: {selectedRadioButton.Value}";
+                header.Text = $"Выбранный метод фрактального анализа изображения: {selectedRadioButton.Content}";
                 radioButton = selectedRadioButton.Value;
-            }                
+            }
         }
     }
 }

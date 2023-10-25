@@ -26,5 +26,7 @@ public partial class RenyiPage : ContentPage
             await DisplayAlert("Not enough data", "You must complete all fields", "ok");
             return;
         }
+
+        await Navigation.PushAsync(new ResultPage());
     }
 }
