@@ -132,11 +132,8 @@ namespace Business.Methods
             return arrays;
         }
 
-        public void CountMFSMethod(Bitmap image)
+        public List<RenyiData> CountMFSMethod(Bitmap image, int n)
         {
-            Console.Write("n: ");
-            int n = Int32.Parse(Console.ReadLine());
-
             int[,] array = new int[image.Width, image.Height];
             array = FillArrayFromImage(image, array);
 
@@ -165,12 +162,9 @@ namespace Business.Methods
                     Q = q,
                     Renyi = D
                 }); ;
-
-                Console.Write("q = " + q);
-                Console.WriteLine(" Renyi = " + D);
             }
 
-            using (StreamWriter streamReader = new StreamWriter("АцФосфор30RotObrBlTreble1,5ImageData.csv"))
+/*            using (StreamWriter streamReader = new StreamWriter("АцФосфор30RotObrBlTreble1,5ImageData.csv"))
             {
                 using (CsvWriter csvWriter = new CsvWriter(streamReader, CultureInfo.InvariantCulture))
                 {
@@ -180,7 +174,9 @@ namespace Business.Methods
                     // записываем данные в csv файл
                     csvWriter.WriteRecords(datas);
                 }
-            }
+            }*/
+
+            return datas;
         }
     }
 }
