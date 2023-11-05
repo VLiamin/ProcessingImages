@@ -29,13 +29,12 @@
 
             <StackLayout RadioButtonGroup.GroupName="methods">
                 <Label x:Name="header" Text="Выберите метод фрактального анализа для исследования изображения" />
-                <RadioButton Content="MFS" Value="MFS" IsChecked="True" CheckedChanged="OnMethodCheckedChanged"/>
-                <RadioButton Content="Density" Value="Density" CheckedChanged="OnMethodCheckedChanged"/>
-                <RadioButton Content="Renyi" Value="Renyi" CheckedChanged="OnMethodCheckedChanged"/>
+                <RadioButton Content="Размерность Минковского" Value="Minkowski" IsChecked="True" CheckedChanged="OnMethodCheckedChanged"/>
+                <RadioButton Content="Локальная функция плотности" Value="Density" CheckedChanged="OnMethodCheckedChanged"/>
+                <RadioButton Content="Cпектр обобщенных размерностей Реньи" Value="Renyi" CheckedChanged="OnMethodCheckedChanged"/>
                 <Button x:Name="MethodButton" Text="Начать исследование" Clicked="OnMethodClicked"/>
             </StackLayout>
 
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>

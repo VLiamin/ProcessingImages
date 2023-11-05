@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:oxy="clr-namespace:OxyPlot.Maui.Skia;assembly=OxyPlot.Maui.Skia"
+             x:Class="ProcessingImages.ResultPage"
+             Title="Результаты исследования">
+
+    <Grid RowDefinitions="Auto,*">
+        <VerticalStackLayout>
+            <Label 
+                x:Name="Results"
+                SemanticProperties.HeadingLevel="Level4"
+                FontSize="25"
+                Text="Результаты"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+        </VerticalStackLayout>
+        <oxy:PlotView x:Name="PlotView" Grid.Row="1" />
+    </Grid>
+</ContentPage>
