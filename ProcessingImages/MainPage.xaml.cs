@@ -94,5 +94,15 @@ namespace ProcessingImages
                 radioButton = selectedRadioButton.Value;
             }
         }
+
+        private async void GetInformationClicked(object sender, EventArgs e)
+        {
+            await DisplayAlert("Информация", "Версия системы: 1.0.0\nОпубликовано: 2023.11.10", "ok");
+        }
+
+        private async void OnHelpClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new HelpPage());
+        }
     }
 }
