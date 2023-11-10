@@ -1,9 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ProcessingImages.MainPage">
+             x:Class="ProcessingImages.MainPage"
+             Title="Фрактальный анализ изображений">
 
+    <ContentPage.ToolbarItems>
+        
+        <ToolbarItem Text="Помощь"
+                     Priority="1"
+                     Order="Secondary"
+                     Clicked="OnHelpClicked"/>
+
+        <ToolbarItem Text="Информация"
+                     Priority="2"
+                     Order="Secondary"
+                     Clicked="GetInformationClicked"/>
+    </ContentPage.ToolbarItems>
     <ScrollView>
+        
         <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
