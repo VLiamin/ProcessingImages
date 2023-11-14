@@ -20,7 +20,7 @@ public partial class RenyiPage : ContentPage
         label2.HeightRequest = 200;
     }
 
-    private async void OnMethodClicked(object sender, EventArgs e)
+    private async void ResultsClicked(object sender, EventArgs e)
     {
         if (Entry_DrugName.Text is null || IncreasePicker.SelectedItem is null)
         {

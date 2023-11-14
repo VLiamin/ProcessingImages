@@ -4,9 +4,8 @@
              xmlns:oxy="clr-namespace:OxyPlot.Maui.Skia;assembly=OxyPlot.Maui.Skia"
              x:Class="ProcessingImages.ResultPage"
              Title="Результаты исследования">
-
-    <Grid RowDefinitions="Auto,*">
-        <VerticalStackLayout>
+    <ScrollView>
+        <StackLayout>
             <Label 
                 x:Name="Results"
                 SemanticProperties.HeadingLevel="Level4"
@@ -14,7 +13,9 @@
                 Text="Результаты"
                 VerticalOptions="Center" 
                 HorizontalOptions="Center" />
-        </VerticalStackLayout>
-        <oxy:PlotView x:Name="PlotView" Grid.Row="1" />
-    </Grid>
+
+            <oxy:PlotView x:Name="plotView1" HeightRequest="350"/>
+            <Button x:Name="MethodButton" Text="Скачать результаты" Clicked="DownloadClicked"/>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
