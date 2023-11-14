@@ -28,6 +28,6 @@
                 </Picker>
             </StackLayout>            
         </StackLayout>
-        <Button x:Name="MethodButton" Text="Получить результаты" Clicked="OnMethodClicked"/>
+        <Button x:Name="MethodButton" Text="Получить результаты" Clicked="ResultsClicked"/>
     </VerticalStackLayout>
 </ContentPage>
