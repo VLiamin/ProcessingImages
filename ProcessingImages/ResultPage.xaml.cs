@@ -118,10 +118,6 @@ public partial class ResultPage
 
     private async void DownloadClicked(object sender, EventArgs e)
     {
-        //string path = FileSystem.Current.AppDataDirectory;
-
-        // ToDo add try-catch
-
         try
         {
             plot.Title = "Crystal";
