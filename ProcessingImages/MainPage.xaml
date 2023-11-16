@@ -21,8 +21,7 @@
         <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
-            VerticalOptions="Center">
-            
+            VerticalOptions="Center">            
 
             <Image
                 x:Name="label"
@@ -35,13 +34,22 @@
                 FontSize="32"
                 HorizontalOptions="Center" />
 
-            <Button
-                x:Name="FilePickerBtn"
-                Text="Выбрать изображение"
-                SemanticProperties.Hint="Select file"
-                Clicked="OnFilePickerClicked"
-                HorizontalOptions="Center" />
+            <StackLayout Spacing="5" Orientation="Horizontal" HorizontalOptions="Center">
+                <Button
+                    x:Name="FilePickerBtn"
+                    Text="Выбрать изображение"
+                    SemanticProperties.Hint="Select file"
+                    Clicked="OnFilePickerClicked"
+                    HorizontalOptions="Center" />
 
+                <Button
+                    x:Name="ImagePreprocessingBtn"
+                    Text="Обработать изображение"
+                    Clicked="OnImagePreprocessingClicked"
+                    IsVisible="False"                
+                    HorizontalOptions="Center" />
+            </StackLayout>
+            
             <StackLayout RadioButtonGroup.GroupName="methods">
                 <Label x:Name="header" Text="Выберите метод фрактального анализа для исследования изображения" FontSize="16"/>
                 <RadioButton Content="Размерность Минковского" Value="Minkowski" IsChecked="True" FontSize="16" CheckedChanged="OnMethodCheckedChanged"/>

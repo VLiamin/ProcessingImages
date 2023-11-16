@@ -4,6 +4,18 @@
              xmlns:oxy="clr-namespace:OxyPlot.Maui.Skia;assembly=OxyPlot.Maui.Skia"
              x:Class="ProcessingImages.ResultPage"
              Title="Результаты исследования">
+    <ContentPage.ToolbarItems>
+
+        <ToolbarItem Text="Помощь"
+                     Priority="1"
+                     Order="Secondary"
+                     Clicked="OnHelpClicked"/>
+
+        <ToolbarItem Text="Информация"
+                     Priority="2"
+                     Order="Secondary"
+                     Clicked="GetInformationClicked"/>
+    </ContentPage.ToolbarItems>
     <ScrollView>
         <StackLayout>
             <Label 

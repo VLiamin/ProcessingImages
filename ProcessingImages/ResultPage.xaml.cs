@@ -120,16 +120,28 @@ public partial class ResultPage
     {
         try
         {
+            String home = Environment.GetEnvironmentVariable("USERPROFILE") + @"\" + "Downloads";
+
             plot.Title = "Crystal";
-            using FileStream stream = File.Create(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "crystal.pdf"));
+            using FileStream stream = File.Create(Path.Combine(home, "crystal.pdf"));
             PdfExporter pdfExporter = new PdfExporter { Width = 600, Height = 400 };
             pdfExporter.Export(plot, stream);
 
-            await DisplayAlert("Сохранение изображения", "Данные сохранились успешно", "Хорошо");
+            await DisplayAlert("Сохранение изображения", $"Данные сохранились успешно\nПуть к файлу: {home}\\crystal.pdf", "Хорошо");
         }
         catch
         {
             await DisplayAlert("Сохранение изображения", "Сохранение данных не удалось", "Хорошо");
         }
+    }
+
+    private async void GetInformationClicked(object sender, EventArgs e)
+    {
+        await DisplayAlert("Информация", "Версия системы: 1.0.0\nОпубликовано: 2023.11.10", "Хорошо");
+    }
+
+    private async void OnHelpClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new HelpPage());
     }
 }
