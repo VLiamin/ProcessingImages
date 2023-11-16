@@ -33,4 +33,14 @@ public partial class RenyiPage : ContentPage
 
         await Navigation.PushAsync(new ResultPage(result, Entry_DrugName.Text, IncreasePicker.SelectedItem.ToString()));
     }
+
+    private async void GetInformationClicked(object sender, EventArgs e)
+    {
+        await DisplayAlert("Информация", "Версия системы: 1.0.0\nОпубликовано: 2023.11.10", "Хорошо");
+    }
+
+    private async void OnHelpClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new HelpPage());
+    }
 }

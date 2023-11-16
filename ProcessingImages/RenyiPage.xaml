@@ -3,6 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProcessingImages.RenyiPage"
              Title="Cпектр обобщенных размерностей Реньи">
+
+    <ContentPage.ToolbarItems>
+
+        <ToolbarItem Text="Помощь"
+                     Priority="1"
+                     Order="Secondary"
+                     Clicked="OnHelpClicked"/>
+
+        <ToolbarItem Text="Информация"
+                     Priority="2"
+                     Order="Secondary"
+                     Clicked="GetInformationClicked"/>
+    </ContentPage.ToolbarItems>
     <VerticalStackLayout
         Spacing="25"
         Padding="30,0"

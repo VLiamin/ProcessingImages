@@ -29,6 +29,7 @@ namespace ProcessingImages
                 label.HeightRequest = 200;
                 image = new Bitmap(fileResult.FullPath);
                 imagePath = fileResult.FullPath;
+                ImagePreprocessingBtn.IsVisible = true;
 
                 if (fileResult is not null)
                 {
@@ -68,7 +69,7 @@ namespace ProcessingImages
         {
             if (image is null)
             {
-                await DisplayAlert("Image not found", "You haven't selected any images", "ok");
+                await DisplayAlert("Изображение не найдено", "Вы не выбрали изображения для исследования", "Понятно");
 
                 return;
             }
@@ -95,9 +96,14 @@ namespace ProcessingImages
             }
         }
 
+        private async void OnImagePreprocessingClicked(object sender, EventArgs e)
+        {
+
+        }
+
         private async void GetInformationClicked(object sender, EventArgs e)
         {
-            await DisplayAlert("Информация", "Версия системы: 1.0.0\nОпубликовано: 2023.11.10", "ok");
+            await DisplayAlert("Информация", "Версия системы: 1.0.0\nОпубликовано: 2023.11.10", "Хорошо");
         }
 
         private async void OnHelpClicked(object sender, EventArgs e)
