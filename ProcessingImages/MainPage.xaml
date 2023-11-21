@@ -51,10 +51,10 @@
             </StackLayout>
             
             <StackLayout RadioButtonGroup.GroupName="methods">
-                <Label x:Name="header" Text="Выберите метод фрактального анализа для исследования изображения" FontSize="16"/>
-                <RadioButton Content="Размерность Минковского" Value="Minkowski" IsChecked="True" FontSize="16" CheckedChanged="OnMethodCheckedChanged"/>
-                <RadioButton Content="Локальная функция плотности" Value="Density" FontSize="16" CheckedChanged="OnMethodCheckedChanged"/>
-                <RadioButton Content="Cпектр обобщенных размерностей Реньи" Value="Renyi" FontSize="16" CheckedChanged="OnMethodCheckedChanged"/>
+                <Label x:Name="header" Text="Выберите метод фрактального анализа для исследования изображения" FontSize="17"/>
+                <RadioButton Content="Размерность Минковского" Value="Minkowski" IsChecked="True" FontSize="17" CheckedChanged="OnMethodCheckedChanged"/>
+                <RadioButton Content="Локальная функция плотности" Value="Density" FontSize="17" CheckedChanged="OnMethodCheckedChanged"/>
+                <RadioButton Content="Cпектр обобщенных размерностей Реньи" Value="Renyi" FontSize="17" CheckedChanged="OnMethodCheckedChanged"/>
                 <Button x:Name="MethodButton" Text="Начать исследование" Clicked="OnMethodClicked"/>
             </StackLayout>
 
