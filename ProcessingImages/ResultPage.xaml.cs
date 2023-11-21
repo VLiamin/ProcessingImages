@@ -1,9 +1,8 @@
 ﻿using Business.Models;
 using OxyPlot;
 using OxyPlot.Axes;
-using OxyPlot.Maui.Skia.Core;
 using OxyPlot.Series;
-using PlotCommands = OxyPlot.Maui.Skia.PlotCommands;
+using System.Collections.ObjectModel;
 
 namespace ProcessingImages;
 
@@ -14,13 +13,27 @@ public partial class ResultPage
     private string increasePicker;
     private PlotModel plot;
 
+    public bool IsRefreshing { get; set; }
+    public ObservableCollection<RenyiData> RenyiDatas { get; set; } = new();
+    public Command RefreshCommand { get; set; }
+
     public ResultPage(List<RenyiData> datas, string preparationName, string increasePicker)
     {
-        InitializeComponent();
-
         this.datas = datas;
         this.preparationName = preparationName;
         this.increasePicker = increasePicker;
+
+        RefreshCommand = new Command(() =>
+        {
+            LoadRenyiDatas();
+
+            IsRefreshing = true;
+            OnPropertyChanged(nameof(IsRefreshing));
+        });
+
+        BindingContext = this;
+
+        InitializeComponent();
 
         this.Loaded += PanModePage_Loaded;
     }
@@ -33,11 +46,10 @@ public partial class ResultPage
 
     public PlotModel CreateNormalDistributionModel()
     {
-        // http://en.wikipedia.org/wiki/Normal_distribution
-
         plot = new PlotModel
         {
             Title = $"Результат исследования препара {preparationName} методом \"Cпектр обобщенных размерностей Реньи\"",
+            DefaultFontSize = 20 
         };
 
         plot.Axes.Add(new LinearAxis
@@ -90,32 +102,6 @@ public partial class ResultPage
         return ls;
     }
 
-    private void PanMode_OnCheckedChanged(object sender, CheckedChangedEventArgs e)
-    {
-        if (!e.Value)
-        {
-            return;
-        }            
-
-        var rb = sender as RadioButton;
-        if (rb?.Value == null)
-            return;
-
-        var viewCmd = rb.Value switch
-        {
-            "2" => PlotCommands.PanZoomByTouchTwoFinger,
-            "3" => PlotCommands.PanZoomByTouchAxisOnly,
-            _ => PlotCommands.PanZoomByTouch
-        };
-
-        var cmd = new CompositeDelegateViewCommand<OxyTouchEventArgs>(
-            PlotCommands.SnapTrackTouch,
-            viewCmd
-        );
-
-        //PlotView.Controller.BindTouchDown(cmd);
-    }
-
     private async void DownloadClicked(object sender, EventArgs e)
     {
         try
@@ -143,5 +129,22 @@ public partial class ResultPage
     private async void OnHelpClicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new HelpPage());
+    }
+
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        base.OnNavigatedTo(args);
+
+        LoadRenyiDatas();
+    }
+
+    private void LoadRenyiDatas()
+    {
+        RenyiDatas.Clear();
+
+        foreach (RenyiData data in datas)
+        {
+          RenyiDatas.Add(data);
+        }
     }
 }

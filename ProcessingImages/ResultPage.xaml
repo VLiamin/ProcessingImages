@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:oxy="clr-namespace:OxyPlot.Maui.Skia;assembly=OxyPlot.Maui.Skia"
+             xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
              x:Class="ProcessingImages.ResultPage"
              Title="Результаты исследования">
     <ContentPage.ToolbarItems>
@@ -27,6 +28,31 @@
                 HorizontalOptions="Center" />
 
             <oxy:PlotView x:Name="plotView1" HeightRequest="350"/>
+            <Label 
+                x:Name="Table"
+                SemanticProperties.HeadingLevel="Level5"
+                FontSize="20"
+                Text="Таблица результатов"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+
+            <dg:DataGrid ItemsSource="{Binding RenyiDatas}" SelectionEnabled="True" SelectedItem="{Binding SelectedRenyiDatas}"
+             RowHeight="70" HeaderHeight="50" PullToRefreshCommand="{Binding RefreshCommand}"
+             IsRefreshing="{Binding IsRefreshing}" HeaderBackground="LightBlue" FontSize="15">
+                <dg:DataGrid.NoDataView>
+                    <Label Text="Nothing to see here 🙈" HorizontalOptions="Center" VerticalOptions="Center" />
+                </dg:DataGrid.NoDataView>
+                <dg:DataGrid.Columns>
+                    <dg:DataGridColumn Title="q" PropertyName="Q"/>
+                    <dg:DataGridColumn Title="D(q)" PropertyName="Renyi" />
+                </dg:DataGrid.Columns>
+                <dg:DataGrid.RowsBackgroundColorPalette>
+                    <dg:PaletteCollection>
+                        <Color>#F2F2F2</Color>
+                        <Color>#FFFFFF</Color>
+                    </dg:PaletteCollection>
+                </dg:DataGrid.RowsBackgroundColorPalette>
+            </dg:DataGrid>
             <Button x:Name="MethodButton" Text="Скачать результаты" Clicked="DownloadClicked"/>
         </StackLayout>
     </ScrollView>
