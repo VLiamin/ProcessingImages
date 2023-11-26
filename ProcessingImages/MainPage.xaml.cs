@@ -29,7 +29,6 @@ namespace ProcessingImages
                 label.HeightRequest = 200;
                 image = new Bitmap(fileResult.FullPath);
                 imagePath = fileResult.FullPath;
-                ImagePreprocessingBtn.IsVisible = true;
 
                 if (fileResult is not null)
                 {
@@ -94,11 +93,6 @@ namespace ProcessingImages
                 header.Text = $"Выбранный метод фрактального анализа изображения: {selectedRadioButton.Content}";
                 radioButton = selectedRadioButton.Value;
             }
-        }
-
-        private async void OnImagePreprocessingClicked(object sender, EventArgs e)
-        {
-
         }
 
         private async void GetInformationClicked(object sender, EventArgs e)
