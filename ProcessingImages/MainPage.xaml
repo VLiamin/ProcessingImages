@@ -1,11 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ProcessingImages.MainPage"
-             Title="Фрактальный анализ изображений">
-
-    <ContentPage.ToolbarItems>
-        
+             x:Class="ProcessingImages.MainPage">
+    <FlyoutBase.ContextFlyout>
+        <MenuFlyout>
+            <MenuFlyoutItem Text="Go to docs repo"
+                            CommandParameter="docs" />
+            <MenuFlyoutItem Text="Go to engineering repo"
+                            CommandParameter="eng" />
+        </MenuFlyout>
+    </FlyoutBase.ContextFlyout>
+    <ContentPage.MenuBarItems>
+        <MenuBarItem Text="Файл" >
+            <MenuFlyoutItem Text="Добавить изображение" 
+                            Clicked="OnFilePickerClicked" />
+            <MenuFlyoutItem Text="Удалить изображение"
+                Command="{Binding ExitCommand}" />
+            <MenuFlyoutItem Text="Сохранить изображение"
+                Command="{Binding ExitCommand}" />
+        </MenuBarItem>
+        <MenuBarItem Text="Настройки изображения">
+            <MenuFlyoutItem Text="Преобразовать в монохромное"
+                            Command="{Binding RefreshCommand}" />
+            <MenuFlyoutItem Text="Выделить границы"
+                            Command="{Binding ChangeThemeCommand}" />
+            <MenuFlyoutItem Text="Обрезать изображение"
+                Command="{Binding ChangeThemeCommand}" />
+            <MenuFlyoutItem Text="Повернуть изображение"
+    Command="{Binding ChangeThemeCommand}" />
+        </MenuBarItem>
+    </ContentPage.MenuBarItems>
+    <ContentPage.ToolbarItems>        
         <ToolbarItem Text="Помощь"
                      Priority="1"
                      Order="Secondary"
@@ -34,22 +59,6 @@
                 FontSize="32"
                 HorizontalOptions="Center" />
 
-            <StackLayout Spacing="5" Orientation="Horizontal" HorizontalOptions="Center">
-                <Button
-                    x:Name="FilePickerBtn"
-                    Text="Выбрать изображение"
-                    SemanticProperties.Hint="Select file"
-                    Clicked="OnFilePickerClicked"
-                    HorizontalOptions="Center" />
-
-                <Button
-                    x:Name="ImagePreprocessingBtn"
-                    Text="Обработать изображение"
-                    Clicked="OnImagePreprocessingClicked"
-                    IsVisible="False"                
-                    HorizontalOptions="Center" />
-            </StackLayout>
-            
             <StackLayout RadioButtonGroup.GroupName="methods">
                 <Label x:Name="header" Text="Выберите метод фрактального анализа для исследования изображения" FontSize="17"/>
                 <RadioButton Content="Размерность Минковского" Value="Minkowski" IsChecked="True" FontSize="17" CheckedChanged="OnMethodCheckedChanged"/>
