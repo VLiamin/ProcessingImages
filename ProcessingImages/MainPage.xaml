@@ -2,14 +2,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProcessingImages.MainPage">
-    <FlyoutBase.ContextFlyout>
-        <MenuFlyout>
-            <MenuFlyoutItem Text="Go to docs repo"
-                            CommandParameter="docs" />
-            <MenuFlyoutItem Text="Go to engineering repo"
-                            CommandParameter="eng" />
-        </MenuFlyout>
-    </FlyoutBase.ContextFlyout>
     <ContentPage.MenuBarItems>
         <MenuBarItem Text="Файл" >
             <MenuFlyoutItem Text="Добавить изображение" 
