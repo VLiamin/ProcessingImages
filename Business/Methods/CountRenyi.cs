@@ -1,7 +1,5 @@
 ﻿using Business.Models;
-using CsvHelper;
 using System.Drawing;
-using System.Globalization;
 
 namespace Business.Methods
 {
@@ -109,11 +107,9 @@ namespace Business.Methods
             List<int[,]> arrays = new();
             imageSize = image.GetLength(0);
 
-            int i = 0;
-            int j = 0;
-            for (i = 0; i < image.GetLength(0) - n; i += n)
+            for (int i = 0; i < image.GetLength(0) - n; i += n)
             {
-                for (j = 0; j < image.GetLength(1) - n; j += n)
+                for (int j = 0; j < image.GetLength(1) - n; j += n)
                 {
                     int[,] array = new int[n, n];
 
@@ -163,18 +159,6 @@ namespace Business.Methods
                     Renyi = D
                 }); ;
             }
-
-/*            using (StreamWriter streamReader = new StreamWriter("АцФосфор30RotObrBlTreble1,5ImageData.csv"))
-            {
-                using (CsvWriter csvWriter = new CsvWriter(streamReader, CultureInfo.InvariantCulture))
-                {
-                    csvWriter.WriteHeader<RenyiData>();
-                    csvWriter.NextRecord(); // adds new line after header
-
-                    // записываем данные в csv файл
-                    csvWriter.WriteRecords(datas);
-                }
-            }*/
 
             return datas;
         }
