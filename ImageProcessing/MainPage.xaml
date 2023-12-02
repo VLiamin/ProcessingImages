@@ -1,0 +1,57 @@
+﻿<Page x:Class="ImageProcessing.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ImageProcessing"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MainPage">
+
+    <ScrollViewer>
+        <StackPanel>
+
+            <Menu Height="25" VerticalAlignment="Top">
+                <MenuItem  Header="Файл" FontSize="17">
+                    <MenuItem Header="Добавить изображение" Click="OnFilePickerClicked" />
+                    <MenuItem Header="Удалить изображение" Click="OnFileRemovePickerClicked" />
+                    <MenuItem Header="Сохранить изображение" Click="OnFilSavePickerClicked" />
+                </MenuItem>
+                <MenuItem Header="Настройки изображения" FontSize="17">
+                    <MenuItem Header="Преобразовать в монохромное"
+                        Click="OnMakeMonochromeClicked" />
+                    <MenuItem Header="Выделить границы"
+                    Command="{Binding ChangeThemeCommand}" />
+                    <MenuItem Header="Обрезать изображение"
+                    Command="{Binding ChangeThemeCommand}" />
+                    <MenuItem Header="Повернуть изображение"
+                    Command="{Binding ChangeThemeCommand}" />
+                </MenuItem>
+                <MenuItem Header="Помощь" FontSize="17" Click="OnHelpClicked" />
+                <MenuItem Header="Информация" FontSize="17" Click="GetInformationClicked"/>
+            </Menu>
+
+            <Image
+            x:Name="imageCrystal"
+            HorizontalAlignment="Center"
+            Margin="30"
+            Visibility="Collapsed"/>
+
+            <StackPanel Grid.Row="1">
+                <TextBlock FontSize="32" HorizontalAlignment="Center" Margin="30">
+                Исследование кристаллов методами фрактального анализа
+                </TextBlock>
+            </StackPanel>
+
+            <StackPanel Margin="30" Grid.Row="2">
+                <TextBlock  x:Name="header" FontSize="17">
+                    Выберите метод фрактального анализа для исследования изображения:
+                </TextBlock>
+                <RadioButton Content="Размерность Минковского"  Name="Minkowski" IsChecked="True" FontSize="17" Checked="OnMethodCheckedChanged" />
+                <RadioButton Content="Локальная функция плотности" Name="Density"  FontSize="17" Checked="OnMethodCheckedChanged" />
+                <RadioButton Content="Cпектр обобщенных размерностей Реньи" Name="Renyi"  FontSize="17" Checked="OnMethodCheckedChanged" />
+                <Button x:Name="MethodButton" Content="Начать исследование" FontSize="17" Height="40" Width="500" Click="OnMethodClicked" />
+            </StackPanel >
+        </StackPanel>
+    </ScrollViewer>
+</Page>

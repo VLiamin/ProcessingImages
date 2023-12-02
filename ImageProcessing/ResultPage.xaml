@@ -1,0 +1,53 @@
+﻿<Page x:Class="ImageProcessing.ResultPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ImageProcessing"
+      xmlns:oxy="http://oxyplot.org/wpf"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ResultPage">
+
+    <ScrollViewer>
+        <StackPanel>
+
+            <Menu Height="25" VerticalAlignment="Top">
+                <MenuItem Header="Помощь" FontSize="17" Click="OnHelpClicked" />
+                <MenuItem Header="Информация" FontSize="17" Click="GetInformationClicked"/>
+            </Menu>
+
+            <oxy:PlotView x:Name="plotView1" Height="350"/>
+
+            <DataGrid x:Name="RenyiTable" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+                    RowBackground="LightGray" AlternatingRowBackground="White" FontSize="21" Visibility="Collapsed">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="Q" Header="q" Width="*" Binding="{Binding Path=Q}" />
+                    <DataGridTextColumn x:Name="Renyi" Header="D(q)" Width="*" Binding="{Binding Path=Renyi}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <DataGrid x:Name="MinkowskiTable" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+                    RowBackground="LightGray" AlternatingRowBackground="White" FontSize="21" Visibility="Collapsed">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="LnI" Header="ln(delta)" Width="*" Binding="{Binding Path=LnI}" />
+                    <DataGridTextColumn x:Name="LnA" Header="ln(A)" Width="*" Binding="{Binding Path=LnA}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <DataGrid x:Name="DensityTable" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+                    RowBackground="LightGray" AlternatingRowBackground="White" FontSize="21" Visibility="Collapsed">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="q" Header="q" Width="*" Binding="{Binding Path=q}" />
+                    <DataGridTextColumn x:Name="D" Header="D" Width="*" Binding="{Binding Path=D}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Button x:Name="MethodButton" Content="Скачать результаты" Click="DownloadClicked" FontSize="17" Height="25" Margin="20"/>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>
