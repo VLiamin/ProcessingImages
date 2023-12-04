@@ -1,4 +1,5 @@
 ﻿using Business.ImageProcessing;
+using ImageProcessing.Constants;
 using ImageProcessing.Enums;
 using Microsoft.Win32;
 using System.Drawing;
@@ -6,7 +7,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 
 namespace ImageProcessing
@@ -150,7 +150,7 @@ namespace ImageProcessing
 
         private void GetInformationClicked(object sender, EventArgs e)
         {
-            MessageBox.Show("Версия системы: 1.0.0\nОпубликовано: 2023.12.01", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(ApplicationConstants.Version, "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void OnHelpClicked(object sender, RoutedEventArgs e)

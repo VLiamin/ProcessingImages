@@ -1,5 +1,6 @@
 ﻿using Business.Methods;
 using Business.Models;
+using ImageProcessing.Constants;
 using ImageProcessing.Enums;
 using OxyPlot;
 using OxyPlot.Axes;
@@ -257,7 +258,7 @@ namespace ImageProcessing
 
         private void GetInformationClicked(object sender, EventArgs e)
         {
-            MessageBox.Show("Версия системы: 1.0.0\nОпубликовано: 2023.12.01", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(ApplicationConstants.Version, "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void OnHelpClicked(object sender, EventArgs e)
