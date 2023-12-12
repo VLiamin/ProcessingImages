@@ -13,11 +13,11 @@
 
             <Menu Height="25" VerticalAlignment="Top">
                 <MenuItem  Header="Файл" FontSize="17">
-                    <MenuItem Header="Добавить изображение" Click="OnFilePickerClicked" />
-                    <MenuItem Header="Удалить изображение" Click="OnFileRemovePickerClicked" />
+                    <MenuItem Header="Загрузить изображение" Click="OnFilePickerClicked" />
+                    <MenuItem Header="Выгрузить изображение" Click="OnFileRemovePickerClicked" />
                     <MenuItem Header="Сохранить изображение" Click="OnFilSavePickerClicked" />
                 </MenuItem>
-                <MenuItem Header="Настройки изображения" FontSize="17">
+                <MenuItem Header="Редактирование изображения" FontSize="17">
                     <MenuItem Header="Преобразовать в монохромное"
                         Click="OnMakeMonochromeClicked" />
                     <MenuItem Header="Выделить границы"
