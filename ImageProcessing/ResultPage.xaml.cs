@@ -21,6 +21,11 @@ namespace ImageProcessing
     {
         private string preparationName;
         private BitmapImage image;
+        private Methods method;
+
+        private List<RenyiData> RenyiResult;
+        private List<MinkowskiData> MinkowskiResult;
+        private List<DensityData> DensityResult;
 
         public ObservableCollection<RenyiData> RenyiDatas { get; set; } = new();
 
@@ -30,6 +35,7 @@ namespace ImageProcessing
         {
             this.preparationName = preparationName;
             this.image = image;
+            this.method = method;
 
             using MemoryStream outStream = new MemoryStream();
 
@@ -45,21 +51,49 @@ namespace ImageProcessing
                 case Methods.Renyi:
                     CountRenyi countRenyi = new CountRenyi();
                     List<RenyiData> RenyiResult = countRenyi.CountMFSMethod(bitmap, n: 3);
+
+                    this.RenyiResult = RenyiResult;
+
                     CreateRenyiPlot(RenyiResult);
+
+                    foreach (RenyiData element in RenyiResult)
+                    {
+                        element.Renyi = Math.Round(element.Renyi, 5);
+                    }
+
                     RenyiTable.Visibility = Visibility.Visible;
                     RenyiTable.ItemsSource = RenyiResult;
                     break;
                 case Methods.Minkowski:
                     CountMinkowski countMinkowski = new CountMinkowski();
                     List<MinkowskiData> MinkowskiResult = countMinkowski.CountFractalsMethod(bitmap);
+
+                    this.MinkowskiResult = MinkowskiResult;
+
                     CreateMinkowskiPlot(MinkowskiResult);
+
+                    foreach (MinkowskiData element in MinkowskiResult)
+                    {
+                        element.LnI = Math.Round(element.LnI, 5);
+                        element.LnA = Math.Round(element.LnA, 5);
+                    }
+
                     MinkowskiTable.Visibility = Visibility.Visible;
                     MinkowskiTable.ItemsSource = MinkowskiResult;
                     break;
                 case Methods.Density:
                     CountDensity countDensity = new CountDensity();
                     List<DensityData> DensityResult = countDensity.CountDensityMethod(bitmap, r: 10);
+
+                    this.DensityResult = DensityResult;
+
                     CreateDensityPlot(DensityResult);
+
+                    foreach (DensityData element in DensityResult)
+                    {
+                        element.D = Math.Round(element.D, 5);
+                    }
+
                     DensityTable.Visibility = Visibility.Visible;
                     DensityTable.ItemsSource = DensityResult;
                     break;
@@ -235,6 +269,22 @@ namespace ImageProcessing
             }
 
             return ls;
+        }
+
+        private void InitialClicked(object sender, EventArgs e)
+        {
+            switch (method)
+            {
+                case Methods.Renyi:
+                    CreateRenyiPlot(RenyiResult);
+                    break;
+                case Methods.Minkowski:
+                    CreateMinkowskiPlot(MinkowskiResult);
+                    break;
+                case Methods.Density:
+                    CreateDensityPlot(DensityResult);
+                    break;
+            }
         }
 
         private void DownloadClicked(object sender, EventArgs e)

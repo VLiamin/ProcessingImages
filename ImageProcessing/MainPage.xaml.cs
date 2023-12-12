@@ -84,6 +84,8 @@ namespace ImageProcessing
             if (image is null)
             {
                 MessageBox.Show("Изображение не найдено", "Необходимо загрузить изображение", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                return;
             }
 
             using MemoryStream outStream = new MemoryStream();

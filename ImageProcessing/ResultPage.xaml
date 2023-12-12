@@ -19,6 +19,8 @@
 
             <oxy:PlotView x:Name="plotView1" Height="350"/>
 
+            <Button x:Name="InitialButton" Content="Вернуть график в исходное состояние" Click="InitialClicked" FontSize="17" Height="25" Margin="20"/>
+
             <DataGrid x:Name="RenyiTable" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
                     RowBackground="LightGray" AlternatingRowBackground="White" FontSize="21" Visibility="Collapsed">
 
@@ -46,7 +48,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <Button x:Name="MethodButton" Content="Скачать результаты" Click="DownloadClicked" FontSize="17" Height="25" Margin="20"/>
+            <Button x:Name="MethodButton" Content="Сохранить результат" Click="DownloadClicked" FontSize="17" Height="25" Margin="20"/>
 
         </StackPanel>
     </ScrollViewer>
