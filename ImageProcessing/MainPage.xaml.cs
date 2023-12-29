@@ -17,7 +17,7 @@ namespace ImageProcessing
     public partial class MainPage : Page
     {
         private static BitmapImage image;
-        private static object radioButton = "MFS";
+        private static Methods method;
 
         public MainPage()
         {
@@ -125,29 +125,22 @@ namespace ImageProcessing
                 return;
             }
 
-            switch (radioButton.ToString())
-            {
-                case "Minkowski":
-                    MainWindow.Main.Content = new ParametersPage(image, Methods.Minkowski);
-                    break;
-                case "Renyi":
-                    MainWindow.Main.Content = new ParametersPage(image, Methods.Renyi);
-                    break;
-                case "Density":
-                    MainWindow.Main.Content = new ParametersPage(image, Methods.Density);
-                    break;
-            }
+            MainWindow.Main.Content = new ParametersPage(image, method);
         }
 
-        private void OnMethodCheckedChanged(object sender, EventArgs e)
+        private void OnMinkowskiMethodCheckedChanged(object sender, EventArgs e)
         {
-            RadioButton selectedRadioButton = ((RadioButton)sender);
+            method = Methods.Minkowski;
+        }
 
-            if (header is not null)
-            {
-                header.Text = $"Выбранный метод фрактального анализа изображения: {selectedRadioButton.Content}";
-                radioButton = selectedRadioButton.Name;
-            }
+        private void OnDensityMethodCheckedChanged(object sender, EventArgs e)
+        {
+            method = Methods.Density;
+        }
+
+        private void OnRenyiMethodCheckedChanged(object sender, EventArgs e)
+        {
+            method = Methods.Renyi;
         }
 
         private void GetInformationClicked(object sender, EventArgs e)

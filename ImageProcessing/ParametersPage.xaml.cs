@@ -23,6 +23,10 @@ namespace ImageProcessing
 
             imageCrystal.Source = image;
             imageCrystal.Height = 200;
+
+            string[] path = image.UriSource.LocalPath.Split('\\');
+            Entry_DrugName.Text = path[path.Length - 1].Split('.')[0];
+            IncreasePicker.Text = "40x";
         }
 
         private void ResultsClicked(object sender, EventArgs e)

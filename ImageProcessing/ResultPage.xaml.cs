@@ -294,11 +294,11 @@ namespace ImageProcessing
                 String home = Environment.GetEnvironmentVariable("USERPROFILE") + @"\" + "Downloads";
 
                 plot.Title = "Crystal";
-                using FileStream stream = File.Create(Path.Combine(home, $"Result_{preparationName}.pdf"));
+                using FileStream stream = File.Create(Path.Combine(home, $"Result{method}_{preparationName}.pdf"));
                 PdfExporter pdfExporter = new PdfExporter { Width = 600, Height = 400 };
                 pdfExporter.Export(plot, stream);
 
-                MessageBox.Show($"Данные сохранились успешно\nПуть к файлу: {home}\\Result_{preparationName}.pdf", "Сохранение изображения", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show($"Данные сохранились успешно\nПуть к файлу: {home}\\Result{method}_{preparationName}.pdf", "Сохранение изображения", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch
             {
