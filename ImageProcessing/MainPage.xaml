@@ -15,7 +15,7 @@
                 <MenuItem  Header="Файл" FontSize="17">
                     <MenuItem Header="Загрузить изображение" Click="OnFilePickerClicked" />
                     <MenuItem Header="Выгрузить изображение" Click="OnFileRemovePickerClicked" />
-                    <MenuItem Header="Сохранить изображение" Click="OnFilSavePickerClicked" />
+                    <MenuItem Header="Сохранить изображение" Click="OnFileSavePickerClicked" />
                 </MenuItem>
                 <MenuItem Header="Редактирование изображения" FontSize="17">
                     <MenuItem Header="Преобразовать в монохромное"
@@ -26,6 +26,11 @@
                     Command="{Binding ChangeThemeCommand}" />
                     <MenuItem Header="Повернуть изображение"
                     Command="{Binding ChangeThemeCommand}" />
+                </MenuItem>
+                <MenuItem  Header="Выбор метода" FontSize="17">
+                    <MenuItem Header="Размерность Минковского" Click="OnMinkowskiMethodCheckedChanged" />
+                    <MenuItem Header="Локальная функция плотности" Click="OnDensityMethodCheckedChanged" />
+                    <MenuItem Header="Cпектр обобщенных размерностей Реньи" Click="OnRenyiMethodCheckedChanged" />
                 </MenuItem>
                 <MenuItem Header="Помощь" FontSize="17" Click="OnHelpClicked" />
                 <MenuItem Header="Информация" FontSize="17" Click="GetInformationClicked"/>
@@ -43,15 +48,7 @@
                 </TextBlock>
             </StackPanel>
 
-            <StackPanel Margin="30" Grid.Row="2">
-                <TextBlock  x:Name="header" FontSize="17">
-                    Выберите метод фрактального анализа для исследования изображения:
-                </TextBlock>
-                <RadioButton Content="Размерность Минковского"  Name="Minkowski" IsChecked="True" FontSize="17" Checked="OnMethodCheckedChanged" />
-                <RadioButton Content="Локальная функция плотности" Name="Density"  FontSize="17" Checked="OnMethodCheckedChanged" />
-                <RadioButton Content="Cпектр обобщенных размерностей Реньи" Name="Renyi"  FontSize="17" Checked="OnMethodCheckedChanged" />
-                <Button x:Name="MethodButton" Content="Начать исследование" FontSize="17" Height="40" Width="500" Click="OnMethodClicked" />
-            </StackPanel >
+            <Button x:Name="MethodButton" Content="Начать исследование" Margin="30" FontSize="17" Height="40" Width="500" Click="OnMethodClicked"/>
         </StackPanel>
     </ScrollViewer>
 </Page>

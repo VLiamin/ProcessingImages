@@ -14,7 +14,7 @@ namespace ImageProcessing
         private readonly BitmapImage image;
         private readonly Methods method;
 
-        public ParametersPage(BitmapImage image, Methods method)
+        public ParametersPage(BitmapImage image, Methods method, string drugName)
         {
             this.image = image;
             this.method = method;
@@ -23,6 +23,8 @@ namespace ImageProcessing
 
             imageCrystal.Source = image;
             imageCrystal.Height = 200;
+            Entry_DrugName.Text = drugName;
+            IncreasePicker.Text = "40x";
         }
 
         private void ResultsClicked(object sender, EventArgs e)

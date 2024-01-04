@@ -15,11 +15,6 @@ namespace Business.ImageProcessing
 
             Color actualColor;
 
-            byte red = 0;
-            byte blue = 0;
-            byte green = 0;
-            int brightness = 0;
-
             double[,] brightnesses = new double[image.Width, image.Height];
 
             for (int i = 0; i < image.Width; i++)

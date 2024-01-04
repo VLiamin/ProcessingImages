@@ -1,4 +1,6 @@
-﻿using Business.Methods;
+﻿using Aspose.Pdf;
+using Aspose.Pdf.Text;
+using Business.Methods;
 using Business.Models;
 using ImageProcessing.Constants;
 using ImageProcessing.Enums;
@@ -9,8 +11,9 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using static System.Net.Mime.MediaTypeNames;
+using Page = System.Windows.Controls.Page;
 
 namespace ImageProcessing
 {
@@ -62,6 +65,7 @@ namespace ImageProcessing
                     }
 
                     RenyiTable.Visibility = Visibility.Visible;
+                    RenyiDescription.Visibility = Visibility.Visible;
                     RenyiTable.ItemsSource = RenyiResult;
                     break;
                 case Methods.Minkowski:
@@ -79,6 +83,7 @@ namespace ImageProcessing
                     }
 
                     MinkowskiTable.Visibility = Visibility.Visible;
+                    MinkowskiDescription.Visibility = Visibility.Visible;
                     MinkowskiTable.ItemsSource = MinkowskiResult;
                     break;
                 case Methods.Density:
@@ -95,6 +100,7 @@ namespace ImageProcessing
                     }
 
                     DensityTable.Visibility = Visibility.Visible;
+                    DensityDescription.Visibility = Visibility.Visible;
                     DensityTable.ItemsSource = DensityResult;
                     break;
             }
@@ -287,18 +293,46 @@ namespace ImageProcessing
             }
         }
 
-        private void DownloadClicked(object sender, EventArgs e)
+        private async void DownloadClicked(object sender, EventArgs e)
         {
             try
             {
                 String home = Environment.GetEnvironmentVariable("USERPROFILE") + @"\" + "Downloads";
+/*
+                Document document = new Document();
 
-                plot.Title = "Crystal";
-                using FileStream stream = File.Create(Path.Combine(home, $"Result_{preparationName}.pdf"));
+                Aspose.Pdf.Page page = document.Pages.Add();
+
+                page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment(preparationName + "\nДата эксперимента: " + DateTime.Today));*/
+
+                string path = $"Result{method}_{preparationName}.pdf";
+
+                MemoryStream memory = new();
+
                 PdfExporter pdfExporter = new PdfExporter { Width = 600, Height = 400 };
-                pdfExporter.Export(plot, stream);
 
-                MessageBox.Show($"Данные сохранились успешно\nПуть к файлу: {home}\\Result_{preparationName}.pdf", "Сохранение изображения", MessageBoxButton.OK, MessageBoxImage.Information);
+                string s = plot.Title;
+                plot.Title = "   ";
+                pdfExporter.Export(plot, memory);
+                plot.Title = s;
+
+                MemoryStream stream = new MemoryStream();
+                byte[] array = memory.ToArray();
+                stream.Write(array, 0, array.Length);
+
+                Document document = new Document(stream);
+
+                Aspose.Pdf.Page page = document.Pages.Add();
+
+                TextFragment textFragment = new TextFragment("Название препарата: " + preparationName + "\nДата эксперимента: " + DateTime.Today);
+                textFragment.TextState.FontSize = 18;
+                page.Paragraphs.Add(textFragment);
+
+                document.Save(Path.Combine(home, path));                
+
+                memory.Close();                
+
+                MessageBox.Show($"Данные сохранились успешно\nПуть к файлу: {home}\\Result{method}_{preparationName}.pdf", "Сохранение изображения", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch
             {
