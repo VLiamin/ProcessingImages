@@ -21,6 +21,24 @@
 
             <Button x:Name="InitialButton" Content="Вернуть график в исходное состояние" Click="InitialClicked" FontSize="17" Height="25" Margin="20"/>
 
+            <TextBlock x:Name="DensityDescription" TextWrapping="Wrap" Margin="20" Visibility="Collapsed">
+                <Run FontSize="20" Foreground="Black">D -- емкостная размерность</Run>
+                <LineBreak />
+                <Run FontSize="20" Foreground="Black">q -- локальная плотность точки с некоторой окрестностью</Run>
+            </TextBlock>
+
+            <TextBlock x:Name="RenyiDescription" TextWrapping="Wrap" Margin="20" Visibility="Collapsed">
+                <Run FontSize="20" Foreground="Black">D(q) -- спектр обобщенных размерностей Реньи</Run>
+                <LineBreak />
+                <Run FontSize="20" Foreground="Black">q --параметр</Run>
+            </TextBlock>
+
+            <TextBlock x:Name="MinkowskiDescription" TextWrapping="Wrap" Margin="20" Visibility="Collapsed">
+                <Run FontSize="20" Foreground="Black">A -- площадь фрактальной поверхности</Run>
+                <LineBreak />
+                <Run FontSize="20" Foreground="Black">delta --номер итерации поверхностей</Run>
+            </TextBlock>
+
             <DataGrid x:Name="RenyiTable" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
                     RowBackground="LightGray" AlternatingRowBackground="White" FontSize="21" Visibility="Collapsed">
 

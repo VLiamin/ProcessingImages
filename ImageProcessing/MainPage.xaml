@@ -15,7 +15,7 @@
                 <MenuItem  Header="Файл" FontSize="17">
                     <MenuItem Header="Загрузить изображение" Click="OnFilePickerClicked" />
                     <MenuItem Header="Выгрузить изображение" Click="OnFileRemovePickerClicked" />
-                    <MenuItem Header="Сохранить изображение" Click="OnFilSavePickerClicked" />
+                    <MenuItem Header="Сохранить изображение" Click="OnFileSavePickerClicked" />
                 </MenuItem>
                 <MenuItem Header="Редактирование изображения" FontSize="17">
                     <MenuItem Header="Преобразовать в монохромное"

@@ -14,7 +14,7 @@ namespace ImageProcessing
         private readonly BitmapImage image;
         private readonly Methods method;
 
-        public ParametersPage(BitmapImage image, Methods method)
+        public ParametersPage(BitmapImage image, Methods method, string drugName)
         {
             this.image = image;
             this.method = method;
@@ -23,9 +23,7 @@ namespace ImageProcessing
 
             imageCrystal.Source = image;
             imageCrystal.Height = 200;
-
-            string[] path = image.UriSource.LocalPath.Split('\\');
-            Entry_DrugName.Text = path[path.Length - 1].Split('.')[0];
+            Entry_DrugName.Text = drugName;
             IncreasePicker.Text = "40x";
         }
 

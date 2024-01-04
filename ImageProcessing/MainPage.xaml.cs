@@ -18,6 +18,7 @@ namespace ImageProcessing
     {
         private static BitmapImage image;
         private static Methods method;
+        private static string drugName;
 
         public MainPage()
         {
@@ -38,6 +39,9 @@ namespace ImageProcessing
                 {
                     image = new BitmapImage(new Uri(op.FileName));
                     imageCrystal.Source = image;
+
+                    string[] path = image.UriSource.LocalPath.Split('\\');
+                    drugName = path[path.Length - 1].Split('.')[0];
                 }
 
                 imageCrystal.Height = 400;
@@ -56,7 +60,7 @@ namespace ImageProcessing
             imageCrystal.Visibility = Visibility.Collapsed;
         }
 
-        private void OnFilSavePickerClicked(object sender, EventArgs e)
+        private void OnFileSavePickerClicked(object sender, EventArgs e)
         {
             if (image is null)
             {
@@ -75,9 +79,6 @@ namespace ImageProcessing
 
             MessageBox.Show($"Данные сохранились успешно\nПуть к файлу: {home}\\crystal.jpg", "Сохранение изображения", MessageBoxButton.OK, MessageBoxImage.Information);
         }
-
-        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
-        public static extern bool DeleteObject(IntPtr hObject);
 
         private void OnMakeMonochromeClicked(object sender, EventArgs e)
         {
@@ -125,7 +126,7 @@ namespace ImageProcessing
                 return;
             }
 
-            MainWindow.Main.Content = new ParametersPage(image, method);
+            MainWindow.Main.Content = new ParametersPage(image, method, drugName);
         }
 
         private void OnMinkowskiMethodCheckedChanged(object sender, EventArgs e)
