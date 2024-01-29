@@ -23,6 +23,7 @@ namespace ImageProcessing
         public HelpPage()
         {
             InitializeComponent();
+            this.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(179, 255, 255));
         }
     }
 }

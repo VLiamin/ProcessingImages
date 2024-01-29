@@ -20,8 +20,8 @@
                 <MenuItem Header="Редактирование изображения" FontSize="17">
                     <MenuItem Header="Преобразовать в монохромное"
                         Click="OnMakeMonochromeClicked" />
-                    <MenuItem Header="Выделить границы"
-                    Command="{Binding ChangeThemeCommand}" />
+                    <MenuItem Header="Удалить фон"
+                        Click="OnRemoveBackGroundClicked" />
                     <MenuItem Header="Обрезать изображение"
                     Command="{Binding ChangeThemeCommand}" />
                     <MenuItem Header="Повернуть изображение"

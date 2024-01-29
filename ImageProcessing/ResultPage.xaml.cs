@@ -11,8 +11,8 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using static System.Net.Mime.MediaTypeNames;
 using Page = System.Windows.Controls.Page;
 
 namespace ImageProcessing
@@ -48,6 +48,7 @@ namespace ImageProcessing
             Bitmap bitmap = new Bitmap(outStream);
 
             InitializeComponent();
+            this.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(179, 255, 255));
 
             switch (method)
             {
@@ -97,6 +98,7 @@ namespace ImageProcessing
                     foreach (DensityData element in DensityResult)
                     {
                         element.D = Math.Round(element.D, 5);
+                        element.q = Math.Round(element.D, 5);
                     }
 
                     DensityTable.Visibility = Visibility.Visible;
@@ -298,12 +300,12 @@ namespace ImageProcessing
             try
             {
                 String home = Environment.GetEnvironmentVariable("USERPROFILE") + @"\" + "Downloads";
-/*
-                Document document = new Document();
+                /*
+                                Document document = new Document();
 
-                Aspose.Pdf.Page page = document.Pages.Add();
+                                Aspose.Pdf.Page page = document.Pages.Add();
 
-                page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment(preparationName + "\nДата эксперимента: " + DateTime.Today));*/
+                                page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment(preparationName + "\nДата эксперимента: " + DateTime.Today));*/
 
                 string path = $"Result{method}_{preparationName}.pdf";
 
@@ -328,9 +330,9 @@ namespace ImageProcessing
                 textFragment.TextState.FontSize = 18;
                 page.Paragraphs.Add(textFragment);
 
-                document.Save(Path.Combine(home, path));                
+                document.Save(Path.Combine(home, path));
 
-                memory.Close();                
+                memory.Close();
 
                 MessageBox.Show($"Данные сохранились успешно\nПуть к файлу: {home}\\Result{method}_{preparationName}.pdf", "Сохранение изображения", MessageBoxButton.OK, MessageBoxImage.Information);
             }

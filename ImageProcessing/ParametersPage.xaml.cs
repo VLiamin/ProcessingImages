@@ -2,6 +2,7 @@
 using ImageProcessing.Enums;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace ImageProcessing
@@ -20,6 +21,7 @@ namespace ImageProcessing
             this.method = method;
 
             InitializeComponent();
+            this.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(179, 255, 255));
 
             imageCrystal.Source = image;
             imageCrystal.Height = 200;
