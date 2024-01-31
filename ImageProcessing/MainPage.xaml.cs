@@ -2,11 +2,13 @@
 using ImageProcessing.Constants;
 using ImageProcessing.Enums;
 using Microsoft.Win32;
+using RemoveBackGround;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace ImageProcessing
@@ -23,6 +25,7 @@ namespace ImageProcessing
         public MainPage()
         {
             InitializeComponent();
+            this.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(179, 255, 255));
         }
 
         private void OnFilePickerClicked(object sender, EventArgs e)
@@ -98,6 +101,52 @@ namespace ImageProcessing
 
             Monochrome monochrome = new Monochrome();
             bitmap = monochrome.MakeMonochrome(bitmap);
+
+            IntPtr hBitmap = bitmap.GetHbitmap();
+            BitmapImage retval;
+
+            using var memory = new MemoryStream();
+
+            bitmap.Save(memory, ImageFormat.Png);
+            memory.Position = 0;
+
+            var bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.StreamSource = memory;
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.EndInit();
+            bitmapImage.Freeze();
+
+            image = bitmapImage;
+            imageCrystal.Source = bitmapImage;
+        }
+
+        private void OnRemoveBackGroundClicked(object sender, EventArgs e)
+        {
+            if (image is null)
+            {
+                MessageBox.Show("Изображение не найдено", "Необходимо загрузить изображение", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                return;
+            }
+
+            using MemoryStream outStream = new MemoryStream();
+
+            BitmapEncoder enc = new BmpBitmapEncoder();
+            enc.Frames.Add(BitmapFrame.Create(image));
+            enc.Save(outStream);
+            Bitmap bitmap = new Bitmap(outStream);
+
+            Monochrome monochrome = new Monochrome();
+            bitmap = monochrome.MakeMonochrome(bitmap);
+
+            ThresholdFunction threshold = new();
+
+            using Bitmap binary = threshold.MakeBinaryImage(bitmap);
+
+            BackGroundRemover function = new();
+
+            bitmap = function.RemoveBackGround(binary, bitmap);
 
             IntPtr hBitmap = bitmap.GetHbitmap();
             BitmapImage retval;

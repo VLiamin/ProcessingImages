@@ -2,6 +2,6 @@
 {
     public static class ApplicationConstants
     {
-        public static string Version = "Версия системы: 1.1.0\nОпубликовано: 2023.12.14";
+        public static string Version = "Версия системы: 1.2.0\nОпубликовано: 2024.01.29";
     }
 }
