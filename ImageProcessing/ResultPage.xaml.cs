@@ -6,6 +6,7 @@ using ImageProcessing.Constants;
 using ImageProcessing.Enums;
 using OxyPlot;
 using OxyPlot.Axes;
+using OxyPlot.Legends;
 using OxyPlot.Series;
 using System.Collections.ObjectModel;
 using System.Drawing;
@@ -22,7 +23,8 @@ namespace ImageProcessing
     /// </summary>
     public partial class ResultPage : Page
     {
-        private string preparationName;
+        private string preparationName1;
+        private string preparationName2;
         private BitmapImage image;
         private Methods method;
 
@@ -30,13 +32,18 @@ namespace ImageProcessing
         private List<MinkowskiData> MinkowskiResult;
         private List<DensityData> DensityResult;
 
+        private List<RenyiData> RenyiResult2;
+        private List<MinkowskiData> MinkowskiResult2;
+        private List<DensityData> DensityResult2;
+
         public ObservableCollection<RenyiData> RenyiDatas { get; set; } = new();
 
         private PlotModel plot { get; set; }
 
-        public ResultPage(BitmapImage image, Methods method, string preparationName)
+        public ResultPage(BitmapImage image, Methods method, string preparationName1, BitmapImage image2 = null, string preparationName2 = null)
         {
-            this.preparationName = preparationName;
+            this.preparationName1 = preparationName1;
+            this.preparationName2 = preparationName2;
             this.image = image;
             this.method = method;
 
@@ -47,6 +54,17 @@ namespace ImageProcessing
             enc.Save(outStream);
             Bitmap bitmap = new Bitmap(outStream);
 
+            Bitmap bitmap2 = null;
+            if (image2 is not null)
+            {
+                using MemoryStream outStream2 = new MemoryStream();
+
+                BitmapEncoder enc2 = new BmpBitmapEncoder();
+                enc2.Frames.Add(BitmapFrame.Create(image2));
+                enc2.Save(outStream);
+                bitmap2 = new Bitmap(outStream);
+            }
+
             InitializeComponent();
             this.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(179, 255, 255));
 
@@ -56,16 +74,33 @@ namespace ImageProcessing
                     CountRenyi countRenyi = new CountRenyi();
                     List<RenyiData> RenyiResult = countRenyi.CountMFSMethod(bitmap, n: 3);
 
-                    this.RenyiResult = RenyiResult;
+                    List<RenyiData> RenyiResult2 = null;
+                    if (bitmap2 is not null)
+                    {
+                        RenyiResult2 = countRenyi.CountMFSMethod(bitmap2, n: 3);
+                        this.RenyiResult2 = RenyiResult2;
 
-                    CreateRenyiPlot(RenyiResult);
+                        RenyiTableBox2.Visibility = Visibility.Visible;
+                        RenyiTableTitle2.Content = $"Результат исследования препарата {preparationName2}";
+                        RenyiTable2.ItemsSource = RenyiResult2;
+
+                        foreach (RenyiData element in RenyiResult2)
+                        {
+                            element.Renyi = Math.Round(element.Renyi, 5);
+                        }
+                    }                    
+
+                    this.RenyiResult = RenyiResult;                    
+
+                    CreateRenyiPlot(RenyiResult, RenyiResult2);
 
                     foreach (RenyiData element in RenyiResult)
                     {
                         element.Renyi = Math.Round(element.Renyi, 5);
                     }
 
-                    RenyiTable.Visibility = Visibility.Visible;
+                    RenyiTableBox1.Visibility = Visibility.Visible;
+                    RenyiTableTitle1.Content = $"Результат исследования препарата {preparationName1}";
                     RenyiDescription.Visibility = Visibility.Visible;
                     RenyiTable.ItemsSource = RenyiResult;
                     break;
@@ -75,7 +110,24 @@ namespace ImageProcessing
 
                     this.MinkowskiResult = MinkowskiResult;
 
-                    CreateMinkowskiPlot(MinkowskiResult);
+                    List<MinkowskiData> MinkowskiResult2 = null;
+                    if (bitmap2 is not null)
+                    {
+                        MinkowskiResult2 = countMinkowski.CountFractalsMethod(bitmap2);
+                        this.MinkowskiResult2 = MinkowskiResult2;
+
+                        MinkowskiTableBox2.Visibility = Visibility.Visible;
+                        MinkowskiTableTitle2.Content = $"Результат исследования препарата {preparationName2}";
+                        MinkowskiTable2.ItemsSource = MinkowskiResult2;
+
+                        foreach (MinkowskiData element in MinkowskiResult2)
+                        {
+                            element.LnI = Math.Round(element.LnI, 5);
+                            element.LnA = Math.Round(element.LnA, 5);
+                        }
+                    }
+
+                    CreateMinkowskiPlot(MinkowskiResult, MinkowskiResult2);
 
                     foreach (MinkowskiData element in MinkowskiResult)
                     {
@@ -83,9 +135,10 @@ namespace ImageProcessing
                         element.LnA = Math.Round(element.LnA, 5);
                     }
 
-                    MinkowskiTable.Visibility = Visibility.Visible;
+                    MinkowskiTableBox1.Visibility = Visibility.Visible;
                     MinkowskiDescription.Visibility = Visibility.Visible;
-                    MinkowskiTable.ItemsSource = MinkowskiResult;
+                    MinkowskiTableTitle1.Content = $"Результат исследования препарата {preparationName1}";
+                    MinkowskiTable1.ItemsSource = MinkowskiResult;
                     break;
                 case Methods.Density:
                     CountDensity countDensity = new CountDensity();
@@ -93,24 +146,42 @@ namespace ImageProcessing
 
                     this.DensityResult = DensityResult;
 
-                    CreateDensityPlot(DensityResult);
+                    List<DensityData> DensityResult2 = null;
+                    if (bitmap2 is not null)
+                    {
+                        DensityResult2 = countDensity.CountDensityMethod(bitmap2, r: 10);
+                        this.DensityResult2 = DensityResult2;
+
+                        DensityTableBox2.Visibility = Visibility.Visible;
+                        DensityTableTitle2.Content = $"Результат исследования препарата {preparationName2}";
+                        DensityTable2.ItemsSource = DensityResult2;
+
+                        foreach (DensityData element in DensityResult2)
+                        {
+                            element.D = Math.Round(element.D, 5);
+                            element.q = Math.Round(element.q, 5);
+                        }
+                    }
+
+                    CreateDensityPlot(DensityResult, DensityResult2);
 
                     foreach (DensityData element in DensityResult)
                     {
                         element.D = Math.Round(element.D, 5);
-                        element.q = Math.Round(element.D, 5);
+                        element.q = Math.Round(element.q, 5);
                     }
 
-                    DensityTable.Visibility = Visibility.Visible;
+                    DensityTableBox1.Visibility = Visibility.Visible;
                     DensityDescription.Visibility = Visibility.Visible;
-                    DensityTable.ItemsSource = DensityResult;
+                    DensityTableTitle1.Content = $"Результат исследования препарата {preparationName1}";
+                    DensityTable1.ItemsSource = DensityResult;
                     break;
             }
         }
 
-        public void CreateRenyiPlot(List<RenyiData> datas)
+        public void CreateRenyiPlot(List<RenyiData> datas, List<RenyiData> datas2 = null)
         {
-            plot = new PlotModel { Title = $"Результат исследования препарата {preparationName} методом \"Cпектр обобщенных размерностей Реньи\"" };
+            plot = new PlotModel { Title = $"Результат исследования методом \"Cпектр обобщенных размерностей Реньи\"" };
 
             plot.Axes.Add(new LinearAxis
             {
@@ -145,16 +216,27 @@ namespace ImageProcessing
                 FontSize = 17
             });
 
+            plot.Series.Add(AddRenyiLine(datas, preparationName1));
 
-            plot.Series.Add(AddRenyiLine(datas));
+            if (datas2 is not null)
+            {
+                plot.Series.Add(AddRenyiLine(datas2, preparationName2));
+            }
+
+            plot.Legends.Add(new Legend()
+            {
+                LegendPosition = LegendPosition.RightTop,
+                LegendFontSize = 14
+            });
+
             plotView1.Model = plot;
         }
 
-        public DataPointSeries AddRenyiLine(List<RenyiData> datas)
+        public DataPointSeries AddRenyiLine(List<RenyiData> datas, string drugName)
         {
-            var ls = new LineSeries
+            LineSeries ls = new LineSeries
             {
-                //Title = string.Format("q={0}, D={1}")
+                Title = drugName
             };
 
             for (int i = 0; i < datas.Count; i++)
@@ -165,9 +247,9 @@ namespace ImageProcessing
             return ls;
         }
 
-        public void CreateMinkowskiPlot(List<MinkowskiData> datas)
+        public void CreateMinkowskiPlot(List<MinkowskiData> datas, List<MinkowskiData> datas2 = null)
         {
-            plot = new PlotModel { Title = $"Результат исследования препарата {preparationName} методом \"Размерность Минковского\"" };
+            plot = new PlotModel { Title = $"Результат исследования препарата {preparationName1} методом \"Размерность Минковского\"" };
 
             plot.Axes.Add(new LinearAxis
             {
@@ -201,16 +283,26 @@ namespace ImageProcessing
                 FontSize = 17
             });
 
+            plot.Legends.Add(new Legend()
+            {
+                LegendPosition = LegendPosition.RightTop,
+                LegendFontSize = 14
+            });
 
-            plot.Series.Add(AddMinkowskiLine(datas));
+            if (datas2 is not null)
+            {
+                plot.Series.Add(AddMinkowskiLine(datas2, preparationName2));
+            }
+
+            plot.Series.Add(AddMinkowskiLine(datas, preparationName1));
             plotView1.Model = plot;
         }
 
-        public DataPointSeries AddMinkowskiLine(List<MinkowskiData> datas)
+        public DataPointSeries AddMinkowskiLine(List<MinkowskiData> datas, string preparationName)
         {
             var ls = new LineSeries
             {
-                //Title = string.Format("q={0}, D={1}")
+                Title = preparationName
             };
 
             for (int i = 0; i < datas.Count; i++)
@@ -221,9 +313,9 @@ namespace ImageProcessing
             return ls;
         }
 
-        public void CreateDensityPlot(List<DensityData> datas)
+        public void CreateDensityPlot(List<DensityData> datas, List<DensityData> datas2 = null)
         {
-            plot = new PlotModel { Title = $"Результат исследования препарата {preparationName} методом \"Размерность Минковского\"" };
+            plot = new PlotModel { Title = $"Результат исследования методом \"Размерность Минковского\"" };
 
             plot.Axes.Add(new LinearAxis
             {
@@ -257,18 +349,29 @@ namespace ImageProcessing
                 FontSize = 17
             });
 
+            plot.Legends.Add(new Legend()
+            {
+                LegendPosition = LegendPosition.RightTop,
+                LegendFontSize = 14
+            });
 
-            plot.Series.Add(AddDensityLine(datas));
+            if (datas2 is not null)
+            {
+                plot.Series.Add(AddDensityLine(datas2, preparationName2));
+            }
+
+            plot.Series.Add(AddDensityLine(datas, preparationName1));
             plotView1.Model = plot;
         }
 
-        public DataPointSeries AddDensityLine(List<DensityData> datas)
+        public DataPointSeries AddDensityLine(List<DensityData> datas, string preparationName)
         {
             var ls = new StairStepSeries
             {
                 StrokeThickness = 3,
                 VerticalStrokeThickness = 0,
-                MarkerType = MarkerType.None
+                MarkerType = MarkerType.None,
+                Title = preparationName,                
             };
 
             for (int i = 0; i < datas.Count; i++)
@@ -284,13 +387,13 @@ namespace ImageProcessing
             switch (method)
             {
                 case Methods.Renyi:
-                    CreateRenyiPlot(RenyiResult);
+                    CreateRenyiPlot(RenyiResult, RenyiResult2);
                     break;
                 case Methods.Minkowski:
-                    CreateMinkowskiPlot(MinkowskiResult);
+                    CreateMinkowskiPlot(MinkowskiResult, MinkowskiResult2);
                     break;
                 case Methods.Density:
-                    CreateDensityPlot(DensityResult);
+                    CreateDensityPlot(DensityResult, DensityResult2);
                     break;
             }
         }
@@ -307,7 +410,7 @@ namespace ImageProcessing
 
                                 page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment(preparationName + "\nДата эксперимента: " + DateTime.Today));*/
 
-                string path = $"Result{method}_{preparationName}.pdf";
+                string path = $"Result{method}_{preparationName1}.pdf";
 
                 MemoryStream memory = new();
 
@@ -326,7 +429,7 @@ namespace ImageProcessing
 
                 Aspose.Pdf.Page page = document.Pages.Add();
 
-                TextFragment textFragment = new TextFragment("Название препарата: " + preparationName + "\nДата эксперимента: " + DateTime.Today);
+                TextFragment textFragment = new TextFragment("Название препарата: " + preparationName1 + "\nДата эксперимента: " + DateTime.Today);
                 textFragment.TextState.FontSize = 18;
                 page.Paragraphs.Add(textFragment);
 
@@ -334,7 +437,7 @@ namespace ImageProcessing
 
                 memory.Close();
 
-                MessageBox.Show($"Данные сохранились успешно\nПуть к файлу: {home}\\Result{method}_{preparationName}.pdf", "Сохранение изображения", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show($"Данные сохранились успешно\nПуть к файлу: {home}\\Result{method}_{preparationName1}.pdf", "Сохранение изображения", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch
             {

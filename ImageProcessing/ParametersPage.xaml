@@ -27,16 +27,39 @@
                     <Label x:Name="DrugName" Content="Напишите название препарата" FontSize="20" />
                     <TextBox x:Name="Entry_DrugName" Width="400" Height="25" FontSize="17" />
                 </StackPanel>
-                <StackPanel>
+                <!--<StackPanel>
                     <Label x:Name="Increase" Content="Увеличение микроскопа" FontSize="20" />
                     <ComboBox x:Name="IncreasePicker" Width="200" Height="25">
                         <TextBlock FontSize="17">40x</TextBlock>
                         <TextBlock FontSize="17">100x</TextBlock>
                     </ComboBox>
-                </StackPanel>
+                </StackPanel>-->
             </StackPanel>
-            <Button x:Name="MethodButton" Content="Получить результаты" FontSize="17" Height="40" Width="500" Click="ResultsClicked"/>
-        
+
+            <Image
+                x:Name="imageCrystal2"
+                HorizontalAlignment="Center"
+                Margin="30"
+                Visibility="Collapsed"/>
+
+            <StackPanel x:Name="TextBox2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="40" Visibility="Collapsed">
+                <StackPanel>
+                    <Label x:Name="DrugName2" Content="Напишите название второго препарата" FontSize="20" />
+                    <TextBox x:Name="Entry_DrugName2" Width="400" Height="25" FontSize="17" />
+                </StackPanel>
+                <!--<StackPanel>
+                    <Label x:Name="Increase" Content="Увеличение микроскопа" FontSize="20" />
+                    <ComboBox x:Name="IncreasePicker" Width="200" Height="25">
+                        <TextBlock FontSize="17">40x</TextBlock>
+                        <TextBlock FontSize="17">100x</TextBlock>
+                    </ComboBox>
+                </StackPanel>-->
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="40" >
+                <Button x:Name="ResultOneWindowButton" Content="Получить результаты в одном окне" FontSize="17" Height="40" Width="500" Click="ResultOneWindowClicked"/>
+                <Button x:Name="ResultSeveralWindowsButton" Content="Получить результаты в разных окнах" FontSize="17" Height="40" Width="500" Click="ResultSeveralWindowsClicked"  Margin="10"  Visibility="Collapsed"/>
+            </StackPanel>
         </StackPanel>
     </ScrollViewer>
 </Page>

@@ -36,12 +36,20 @@
                 <MenuItem Header="Информация" FontSize="17" Click="GetInformationClicked"/>
             </Menu>
 
-            <Image
-            x:Name="imageCrystal"
-            HorizontalAlignment="Center"
-            Margin="30"
-            Visibility="Collapsed"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="40" >
+                <Image
+                    x:Name="imageCrystal0"
+                    HorizontalAlignment="Center"
+                    Margin="30"
+                    Visibility="Collapsed"/>
 
+                <Image
+                    x:Name="imageCrystal"
+                    HorizontalAlignment="Center"
+                    Margin="30"
+                    Visibility="Collapsed"/>
+            </StackPanel>
+        
             <StackPanel Grid.Row="1">
                 <TextBlock FontSize="32" HorizontalAlignment="Center" Margin="30">
                 Исследование кристаллов методами фрактального анализа
