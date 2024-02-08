@@ -39,33 +39,78 @@
                 <Run FontSize="20" Foreground="Black">delta --номер итерации поверхностей</Run>
             </TextBlock>
 
-            <DataGrid x:Name="RenyiTable" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
-                    RowBackground="LightGray" AlternatingRowBackground="White" FontSize="21" Visibility="Collapsed">
+            <StackPanel x:Name="RenyiTableBox1" Visibility="Collapsed">
+                <Label x:Name="RenyiTableTitle1" Content="Your Title goes here" FontSize="20" HorizontalAlignment="Center" Margin="10"/>
+                <DataGrid x:Name="RenyiTable" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+                    RowBackground="LightGray" AlternatingRowBackground="White" FontSize="21">
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="Q" Header="q" Width="*" Binding="{Binding Path=Q}" />
-                    <DataGridTextColumn x:Name="Renyi" Header="D(q)" Width="*" Binding="{Binding Path=Renyi}"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="Q" Header="q" Width="*" Binding="{Binding Path=Q}" />
+                        <DataGridTextColumn x:Name="Renyi" Header="D(q)" Width="*" Binding="{Binding Path=Renyi}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
 
-            <DataGrid x:Name="MinkowskiTable" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
-                    RowBackground="LightGray" AlternatingRowBackground="White" FontSize="21" Visibility="Collapsed">
+            <StackPanel x:Name="RenyiTableBox2" Visibility="Collapsed">
+                <Label x:Name="RenyiTableTitle2" Content="Your Title goes here" FontSize="20" HorizontalAlignment="Center" Margin="10"/>
+                <DataGrid x:Name="RenyiTable2" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+                    RowBackground="LightGray" AlternatingRowBackground="White" FontSize="21">
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="LnI" Header="ln(delta)" Width="*" Binding="{Binding Path=LnI}" />
-                    <DataGridTextColumn x:Name="LnA" Header="ln(A)" Width="*" Binding="{Binding Path=LnA}"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="Q2" Header="q" Width="*" Binding="{Binding Path=Q}" />
+                        <DataGridTextColumn x:Name="Renyi2" Header="D(q)" Width="*" Binding="{Binding Path=Renyi}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
 
-            <DataGrid x:Name="DensityTable" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
-                    RowBackground="LightGray" AlternatingRowBackground="White" FontSize="21" Visibility="Collapsed">
+            <StackPanel x:Name="MinkowskiTableBox1" Visibility="Collapsed">
+                <Label x:Name="MinkowskiTableTitle1" Content="Your Title goes here" FontSize="20" HorizontalAlignment="Center" Margin="10"/>
+                <DataGrid x:Name="MinkowskiTable1" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+                    RowBackground="LightGray" AlternatingRowBackground="White" FontSize="21">
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="q" Header="q" Width="*" Binding="{Binding Path=q}" />
-                    <DataGridTextColumn x:Name="D" Header="D" Width="*" Binding="{Binding Path=D}"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="LnI" Header="ln(delta)" Width="*" Binding="{Binding Path=LnI}" />
+                        <DataGridTextColumn x:Name="LnA" Header="ln(A)" Width="*" Binding="{Binding Path=LnA}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
 
+            <StackPanel x:Name="MinkowskiTableBox2" Visibility="Collapsed">
+                <Label x:Name="MinkowskiTableTitle2" Content="Your Title goes here" FontSize="20" HorizontalAlignment="Center" Margin="10"/>
+                <DataGrid x:Name="MinkowskiTable2" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+                    RowBackground="LightGray" AlternatingRowBackground="White" FontSize="21">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="LnI2" Header="ln(delta)" Width="*" Binding="{Binding Path=LnI}" />
+                        <DataGridTextColumn x:Name="LnA2" Header="ln(A)" Width="*" Binding="{Binding Path=LnA}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+
+            <StackPanel x:Name="DensityTableBox1" Visibility="Collapsed">
+                <Label x:Name="DensityTableTitle1" Content="Your Title goes here" FontSize="20" HorizontalAlignment="Center" Margin="10"/>
+                <DataGrid x:Name="DensityTable1" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+                    RowBackground="LightGray" AlternatingRowBackground="White" FontSize="21">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="q" Header="q" Width="*" Binding="{Binding Path=q}" />
+                        <DataGridTextColumn x:Name="D" Header="D" Width="*" Binding="{Binding Path=D}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+
+            <StackPanel x:Name="DensityTableBox2" Visibility="Collapsed">
+                <Label x:Name="DensityTableTitle2" Content="Your Title goes here" FontSize="20" HorizontalAlignment="Center" Margin="10"/>
+                <DataGrid x:Name="DensityTable2" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+                    RowBackground="LightGray" AlternatingRowBackground="White" FontSize="21">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="q2" Header="q" Width="*" Binding="{Binding Path=q}" />
+                        <DataGridTextColumn x:Name="D2" Header="D" Width="*" Binding="{Binding Path=D}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+            
             <Button x:Name="MethodButton" Content="Сохранить результат" Click="DownloadClicked" FontSize="17" Height="25" Margin="20"/>
 
         </StackPanel>

@@ -19,8 +19,10 @@ namespace ImageProcessing
     public partial class MainPage : Page
     {
         private static BitmapImage image;
+        private static BitmapImage image0;
         private static Methods method;
         private static string drugName;
+        private static string drugName0;
 
         public MainPage()
         {
@@ -30,6 +32,31 @@ namespace ImageProcessing
 
         private void OnFilePickerClicked(object sender, EventArgs e)
         {
+            if (image0 != null)
+            {
+                MessageBox.Show("Ошибка при добавлении изображения", "Достигнуто максимальное количество изображений", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (image is not null)
+            {
+                const string message =
+                    "Добавить второе изображение или заменить существующее?";
+                const string caption = "Добавление  изображения";
+                MessageBoxResult result = MessageBox.Show(message, caption,
+                                             MessageBoxButton.YesNo);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    image0 = image;
+                    drugName0 = drugName;
+
+                    imageCrystal0.Source = image0;
+                    imageCrystal0.Height = 400;
+                    imageCrystal0.Visibility = Visibility.Visible;
+                    imageCrystal.Visibility = Visibility.Collapsed;
+                }                
+            }
             try
             {
                 OpenFileDialog op = new OpenFileDialog();
@@ -58,9 +85,23 @@ namespace ImageProcessing
 
         private void OnFileRemovePickerClicked(object sender, EventArgs e)
         {
-            image = null;
-            imageCrystal.Source = null;
-            imageCrystal.Visibility = Visibility.Collapsed;
+            if (image0 is not null)
+            {
+                image = image0;
+                imageCrystal.Source = image0;
+                drugName = drugName0;
+
+                drugName0 = null;
+                image0 = null;
+                imageCrystal0.Source = null;
+                imageCrystal0.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                image = null;
+                imageCrystal.Source = null;
+                imageCrystal.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void OnFileSavePickerClicked(object sender, EventArgs e)
@@ -175,7 +216,14 @@ namespace ImageProcessing
                 return;
             }
 
-            MainWindow.Main.Content = new ParametersPage(image, method, drugName);
+            if (image0 is not null)
+            {
+                MainWindow.Main.Content = new ParametersPage(image0, method, drugName0, image, drugName);
+            }
+            else
+            {
+                MainWindow.Main.Content = new ParametersPage(image, method, drugName);
+            }            
         }
 
         private void OnMinkowskiMethodCheckedChanged(object sender, EventArgs e)
