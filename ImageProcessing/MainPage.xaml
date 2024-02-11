@@ -32,6 +32,10 @@
                     <MenuItem Header="Локальная функция плотности" Click="OnDensityMethodCheckedChanged" />
                     <MenuItem Header="Cпектр обобщенных размерностей Реньи" Click="OnRenyiMethodCheckedChanged" />
                 </MenuItem>
+                <MenuItem  Header="Фильтрация изображения" FontSize="17">
+                    <MenuItem Header="Метод Лапласа" Click="OnLaplacianMethod" />
+                    <MenuItem Header="Нерезкое маскирование" Click="OnIncreaseTrebleMethod" />
+                </MenuItem>
                 <MenuItem Header="Помощь" FontSize="17" Click="OnHelpClicked" />
                 <MenuItem Header="Информация" FontSize="17" Click="GetInformationClicked"/>
             </Menu>
