@@ -3,6 +3,7 @@ using ImageProcessing.Constants;
 using ImageProcessing.Enums;
 using Microsoft.Win32;
 using RemoveBackGround;
+using Sharpness;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -188,6 +189,83 @@ namespace ImageProcessing
             BackGroundRemover function = new();
 
             bitmap = function.RemoveBackGround(binary, bitmap);
+
+            IntPtr hBitmap = bitmap.GetHbitmap();
+            BitmapImage retval;
+
+            using var memory = new MemoryStream();
+
+            bitmap.Save(memory, ImageFormat.Png);
+            memory.Position = 0;
+
+            var bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.StreamSource = memory;
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.EndInit();
+            bitmapImage.Freeze();
+
+            image = bitmapImage;
+            imageCrystal.Source = bitmapImage;
+        }
+
+        private void OnLaplacianMethod(object sender, EventArgs e)
+        {
+            if (image is null)
+            {
+                MessageBox.Show("Изображение не найдено", "Необходимо загрузить изображение", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                return;
+            }
+
+            using MemoryStream outStream = new MemoryStream();
+
+            BitmapEncoder enc = new BmpBitmapEncoder();
+            enc.Frames.Add(BitmapFrame.Create(image));
+            enc.Save(outStream);
+            Bitmap bitmap = new Bitmap(outStream);
+
+            SharpnessByLaplacian sharpnessByLaplacian = new SharpnessByLaplacian();
+            Bitmap laplacian = sharpnessByLaplacian.MakeLaplacian(bitmap);
+            bitmap = sharpnessByLaplacian.MakeSharpnessByLapalacian(bitmap, laplacian);
+
+            IntPtr hBitmap = bitmap.GetHbitmap();
+            BitmapImage retval;
+
+            using var memory = new MemoryStream();
+
+            bitmap.Save(memory, ImageFormat.Png);
+            memory.Position = 0;
+
+            var bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.StreamSource = memory;
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.EndInit();
+            bitmapImage.Freeze();
+
+            image = bitmapImage;
+            imageCrystal.Source = bitmapImage;
+        }
+
+        private void OnIncreaseTrebleMethod(object sender, EventArgs e)
+        {
+            if (image is null)
+            {
+                MessageBox.Show("Изображение не найдено", "Необходимо загрузить изображение", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                return;
+            }
+
+            using MemoryStream outStream = new MemoryStream();
+
+            BitmapEncoder enc = new BmpBitmapEncoder();
+            enc.Frames.Add(BitmapFrame.Create(image));
+            enc.Save(outStream);
+            Bitmap bitmap = new Bitmap(outStream);
+
+            IncreaseTreble increaseTreble = new IncreaseTreble();
+            bitmap = increaseTreble.MakeIncreaseTreble(bitmap, 1.5);
 
             IntPtr hBitmap = bitmap.GetHbitmap();
             BitmapImage retval;
