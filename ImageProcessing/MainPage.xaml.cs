@@ -1,6 +1,7 @@
 ﻿using Business.ImageProcessing;
 using ImageProcessing.Constants;
 using ImageProcessing.Enums;
+using ImageProcessing.Windows;
 using Microsoft.Win32;
 using RemoveBackGround;
 using Sharpness;
@@ -43,7 +44,7 @@ namespace ImageProcessing
             if (image is not null)
             {
                 const string message =
-                    "Добавить второе изображение или заменить существующее?";
+                    "Добавить второе изображение";
                 const string caption = "Добавление  изображения";
                 MessageBoxResult result = MessageBox.Show(message, caption,
                                              MessageBoxButton.YesNo);
@@ -57,7 +58,7 @@ namespace ImageProcessing
                     imageCrystal0.Height = 400;
                     imageCrystal0.Visibility = Visibility.Visible;
                     imageCrystal.Visibility = Visibility.Collapsed;
-                }                
+                }
             }
             try
             {
@@ -176,6 +177,13 @@ namespace ImageProcessing
                 return;
             }
 
+            BackGroundRemoverWindow backgroundemoverWindow = new BackGroundRemoverWindow();
+
+            if (!backgroundemoverWindow.ShowDialog().Value)
+            {
+                return;
+            }
+
             using MemoryStream outStream = new MemoryStream();
 
             BitmapEncoder enc = new BmpBitmapEncoder();
@@ -188,7 +196,7 @@ namespace ImageProcessing
 
             ThresholdFunction threshold = new();
 
-            using Bitmap binary = threshold.MakeBinaryImage(bitmap);
+            using Bitmap binary = threshold.MakeBinaryImage(bitmap, double.Parse(backgroundemoverWindow.BackGroundPart));
 
             BackGroundRemover function = new();
 
@@ -308,7 +316,7 @@ namespace ImageProcessing
             else
             {
                 MainWindow.Main.Content = new ParametersPage(image, method, drugName);
-            }            
+            }
         }
 
         private void OnMinkowskiMethodCheckedChanged(object sender, EventArgs e)

@@ -4,7 +4,7 @@ namespace RemoveBackGround
 {
     public class ThresholdFunction
     {
-        public Bitmap MakeBinaryImage(Bitmap oldImage)
+        public Bitmap MakeBinaryImage(Bitmap oldImage, double backgroundPart)
         {
             if (oldImage is null)
             {
@@ -57,7 +57,7 @@ namespace RemoveBackGround
 
             int value = 1;
             count = range[0];
-            while (count < 0.3 * image.Width * image.Height)
+            while (count < backgroundPart * image.Width * image.Height && value < range.Length)
             {
                 count += range[value];
                 value++;
