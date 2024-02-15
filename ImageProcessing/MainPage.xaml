@@ -17,6 +17,9 @@
                     <MenuItem Header="Выгрузить изображение" Click="OnFileRemovePickerClicked" />
                     <MenuItem Header="Сохранить изображение" Click="OnFileSavePickerClicked" />
                 </MenuItem>
+                <MenuItem  Header="Правка" FontSize="17">
+                    <MenuItem Header="Отменить действие" Click="CancelAction" />
+                </MenuItem>
                 <MenuItem Header="Редактирование изображения" FontSize="17">
                     <MenuItem Header="Преобразовать в монохромное"
                         Click="OnMakeMonochromeClicked" />

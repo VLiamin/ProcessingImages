@@ -21,6 +21,7 @@ namespace ImageProcessing
     {
         private static BitmapImage image;
         private static BitmapImage image0;
+        private static BitmapImage previousImage;
         private static Methods method;
         private static string drugName;
         private static string drugName0;
@@ -103,6 +104,8 @@ namespace ImageProcessing
                 imageCrystal.Source = null;
                 imageCrystal.Visibility = Visibility.Collapsed;
             }
+
+            previousImage = null;
         }
 
         private void OnFileSavePickerClicked(object sender, EventArgs e)
@@ -159,6 +162,7 @@ namespace ImageProcessing
             bitmapImage.EndInit();
             bitmapImage.Freeze();
 
+            previousImage = image;
             image = bitmapImage;
             imageCrystal.Source = bitmapImage;
         }
@@ -205,6 +209,7 @@ namespace ImageProcessing
             bitmapImage.EndInit();
             bitmapImage.Freeze();
 
+            previousImage = image;
             image = bitmapImage;
             imageCrystal.Source = bitmapImage;
         }
@@ -244,6 +249,7 @@ namespace ImageProcessing
             bitmapImage.EndInit();
             bitmapImage.Freeze();
 
+            previousImage = image;
             image = bitmapImage;
             imageCrystal.Source = bitmapImage;
         }
@@ -282,6 +288,7 @@ namespace ImageProcessing
             bitmapImage.EndInit();
             bitmapImage.Freeze();
 
+            previousImage = image;
             image = bitmapImage;
             imageCrystal.Source = bitmapImage;
         }
@@ -327,6 +334,12 @@ namespace ImageProcessing
         private void OnHelpClicked(object sender, RoutedEventArgs e)
         {
             MainWindow.Main.Content = new HelpPage();
+        }
+
+        private void CancelAction(object sender, RoutedEventArgs e)
+        {
+            image = previousImage;
+            imageCrystal.Source = previousImage;
         }
     }
 }
