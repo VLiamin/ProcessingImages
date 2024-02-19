@@ -198,6 +198,10 @@ namespace ImageProcessing
 
             using Bitmap binary = threshold.MakeBinaryImage(bitmap, double.Parse(backgroundemoverWindow.BackGroundPart));
 
+            HighlightingConnectedComponent highlightingConnectedComponent = new();
+
+            highlightingConnectedComponent.HighlightComponent(binary);
+;
             BackGroundRemover function = new();
 
             bitmap = function.RemoveBackGround(binary, bitmap);
