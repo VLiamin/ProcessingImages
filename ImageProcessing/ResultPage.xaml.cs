@@ -8,6 +8,7 @@ using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Legends;
 using OxyPlot.Series;
+using OxyPlot.Wpf;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
@@ -88,9 +89,9 @@ namespace ImageProcessing
                         {
                             element.Renyi = Math.Round(element.Renyi, 5);
                         }
-                    }                    
+                    }
 
-                    this.RenyiResult = RenyiResult;                    
+                    this.RenyiResult = RenyiResult;
 
                     CreateRenyiPlot(RenyiResult, RenyiResult2);
 
@@ -371,7 +372,7 @@ namespace ImageProcessing
                 StrokeThickness = 3,
                 VerticalStrokeThickness = 0,
                 MarkerType = MarkerType.None,
-                Title = preparationName,                
+                Title = preparationName,
             };
 
             for (int i = 0; i < datas.Count; i++)
@@ -403,14 +404,8 @@ namespace ImageProcessing
             try
             {
                 String home = Environment.GetEnvironmentVariable("USERPROFILE") + @"\" + "Downloads";
-                /*
-                                Document document = new Document();
 
-                                Aspose.Pdf.Page page = document.Pages.Add();
-
-                                page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment(preparationName + "\nДата эксперимента: " + DateTime.Today));*/
-
-                string path = $"Result{method}_{preparationName1}.pdf";
+                string path = $"Result{method}_{preparationName1}_{preparationName2}.pdf";
 
                 MemoryStream memory = new();
 
@@ -433,17 +428,166 @@ namespace ImageProcessing
                 textFragment.TextState.FontSize = 18;
                 page.Paragraphs.Add(textFragment);
 
-                document.Save(Path.Combine(home, path));
+                switch (method)
+                {
+                    case Methods.Renyi:
+                        CreateRenyiTable(page, RenyiResult, preparationName1);
+                        if (RenyiResult2 is not null)
+                        {
+                            TextFragment textFragment2 = new TextFragment("Название препарата: " + preparationName2);
+                            textFragment2.TextState.FontSize = 18;
+                            page.Paragraphs.Add(textFragment2);
+                            CreateRenyiTable(page, RenyiResult2, preparationName2);
+                        }
+                        break;
+                    case Methods.Minkowski:
+                        CreateMinkowskiTable(page, MinkowskiResult, preparationName1);
+                        if (MinkowskiResult2 is not null)
+                        {
+                            TextFragment textFragment2 = new TextFragment("Название препарата: " + preparationName2);
+                            textFragment2.TextState.FontSize = 18;
+                            page.Paragraphs.Add(textFragment2);
+                            CreateMinkowskiTable(page, MinkowskiResult2, preparationName2);
+                        }
+                        break;
+                    case Methods.Density:
+                        CreateDensityTable(page, DensityResult, preparationName1);
+                        if (DensityResult2 is not null)
+                        {
+                            TextFragment textFragment2 = new TextFragment("Название препарата: " + preparationName2);
+                            textFragment2.TextState.FontSize = 18;
+                            page.Paragraphs.Add(textFragment2);
+                            CreateDensityTable(page, DensityResult2, preparationName2);
+                        }
+                        break;
+                }
+
+                document.Save(System.IO.Path.Combine(home, path));
 
                 memory.Close();
 
-                MessageBox.Show($"Данные сохранились успешно\nПуть к файлу: {home}\\Result{method}_{preparationName1}.pdf", "Сохранение изображения", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show($"Данные сохранились успешно\nПуть к файлу: {home}\\Result{method}_{preparationName1}_{preparationName2}.pdf", "Сохранение изображения", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch
             {
                 MessageBox.Show("Сохранение данных не удалось", "Сохранение изображения", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void CreateRenyiTable(Aspose.Pdf.Page page, List<RenyiData> data, string name)
+        {
+            Aspose.Pdf.Table table = new Aspose.Pdf.Table
+            {
+                // Set the table border color as LightGray
+                Border = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.Black),
+                // Set the border for table cells
+                DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.Black),
+                
+            };
+
+            table.DefaultCellTextState = new TextState(18);
+            table.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Center;
+
+            Aspose.Pdf.Row row0 = table.Rows.Add();
+            row0.Cells.Add("q");
+            row0.Cells.Add("D(q)");
+
+            for (int i = 0; i < data.Count; i++)
+            {
+                // Add row to table
+                Aspose.Pdf.Row row = table.Rows.Add();
+                // Add table cells
+                row.Cells.Add(data[i].Q.ToString());
+                row.Cells.Add(data[i].Renyi.ToString());
+            }
+
+            // Add table object to first page of input document
+            page.Paragraphs.Add(table);
+
+            Aspose.Pdf.Text.TextFragment text = new Aspose.Pdf.Text.TextFragment();
+            text.TextState.FormattingOptions = new Aspose.Pdf.Text.TextFormattingOptions()
+            {
+                SubsequentLinesIndent = 20
+            };
+            page.Paragraphs.Add(text);
+        }
+
+        private void CreateMinkowskiTable(Aspose.Pdf.Page page, List<MinkowskiData> data, string name)
+        {
+            Aspose.Pdf.Table table = new Aspose.Pdf.Table
+            {
+                // Set the table border color as LightGray
+                Border = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.Black),
+                // Set the border for table cells
+                DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.Black),
+
+            };
+
+            table.DefaultCellTextState = new TextState(18);
+            table.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Center;
+
+            Aspose.Pdf.Row row0 = table.Rows.Add();
+            row0.Cells.Add("ln(delta)");
+            row0.Cells.Add("ln(A)");
+
+            for (int i = 0; i < data.Count; i++)
+            {
+                // Add row to table
+                Aspose.Pdf.Row row = table.Rows.Add();
+                // Add table cells
+                row.Cells.Add(data[i].LnI.ToString());
+                row.Cells.Add(data[i].LnA.ToString());
+            }
+
+            // Add table object to first page of input document
+            page.Paragraphs.Add(table);
+
+            Aspose.Pdf.Text.TextFragment text = new Aspose.Pdf.Text.TextFragment();
+            text.TextState.FormattingOptions = new Aspose.Pdf.Text.TextFormattingOptions()
+            {
+                SubsequentLinesIndent = 20
+            };
+            page.Paragraphs.Add(text);
+        }
+
+        private void CreateDensityTable(Aspose.Pdf.Page page, List<DensityData> data, string name)
+        {
+            Aspose.Pdf.Table table = new Aspose.Pdf.Table
+            {
+                // Set the table border color as LightGray
+                Border = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.Black),
+                // Set the border for table cells
+                DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.Black),
+
+            };
+
+            table.DefaultCellTextState = new TextState(18);
+            table.HorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Center;
+
+            Aspose.Pdf.Row row0 = table.Rows.Add();
+            row0.Cells.Add("q");
+            row0.Cells.Add("D");
+
+            for (int i = 0; i < data.Count; i++)
+            {
+                // Add row to table
+                Aspose.Pdf.Row row = table.Rows.Add();
+                // Add table cells
+                row.Cells.Add(data[i].q.ToString());
+                row.Cells.Add(data[i].D.ToString());
+            }
+
+            // Add table object to first page of input document
+            page.Paragraphs.Add(table);
+
+            Aspose.Pdf.Text.TextFragment text = new Aspose.Pdf.Text.TextFragment();
+            text.TextState.FormattingOptions = new Aspose.Pdf.Text.TextFormattingOptions()
+            {
+                SubsequentLinesIndent = 20
+            };
+            page.Paragraphs.Add(text);
+        }
+
 
         private void GetInformationClicked(object sender, EventArgs e)
         {

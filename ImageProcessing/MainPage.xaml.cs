@@ -203,8 +203,10 @@ namespace ImageProcessing
             highlightingConnectedComponent.HighlightComponent(binary);
 ;
             BackGroundRemover function = new();
+            ImageResizer imageResizer = new();
 
             bitmap = function.RemoveBackGround(binary, bitmap);
+            bitmap = imageResizer.ResizeImage(bitmap);
 
             IntPtr hBitmap = bitmap.GetHbitmap();
             BitmapImage retval;

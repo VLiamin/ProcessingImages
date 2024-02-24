@@ -25,8 +25,6 @@
                         Click="OnMakeMonochromeClicked" />
                     <MenuItem Header="Удалить фон"
                         Click="OnRemoveBackGroundClicked" />
-                    <MenuItem Header="Обрезать изображение"
-                    Command="{Binding ChangeThemeCommand}" />
                     <MenuItem Header="Повернуть изображение"
                     Command="{Binding ChangeThemeCommand}" />
                 </MenuItem>

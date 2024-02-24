@@ -13,13 +13,6 @@ public class HighlightingConnectedComponent
 
         List<(int i, int j)> values = new();
 
-        Color actualColor;
-
-        byte red = 0;
-        byte blue = 0;
-        byte green = 0;
-        int brightness = 0;
-
         int i = oldImage.Width / 2;
         int j = oldImage.Height / 2;
 
