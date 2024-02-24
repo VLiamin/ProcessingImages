@@ -6,10 +6,11 @@ namespace Business.Methods
     public class CountRenyi
     {
         private int imageSize = 0;
-        private List<double> pi = new();
+        private List<double> pi;
 
         private void CountPi(List<int[,]> parts, int[,] image)
         {
+            pi = new();
             long allBrightness = 0;
 
             for (int i = 0; i < image.GetLength(0); i++)
