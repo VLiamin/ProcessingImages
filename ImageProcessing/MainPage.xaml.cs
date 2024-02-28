@@ -177,9 +177,69 @@ namespace ImageProcessing
                 return;
             }
 
-            BackGroundRemoverWindow backgroundemoverWindow = new BackGroundRemoverWindow();
+            using MemoryStream outStream = new MemoryStream();
+
+            BitmapEncoder enc = new BmpBitmapEncoder();
+            enc.Frames.Add(BitmapFrame.Create(image));
+            enc.Save(outStream);
+            Bitmap bitmap = new Bitmap(outStream);
+
+            BackGroundRemoverWindow backgroundemoverWindow = new BackGroundRemoverWindow(bitmap.Width / 2, bitmap.Height / 2);
 
             if (!backgroundemoverWindow.ShowDialog().Value)
+            {
+                return;
+            }
+
+            Monochrome monochrome = new Monochrome();
+            bitmap = monochrome.MakeMonochrome(bitmap);
+
+            ThresholdFunction threshold = new();
+
+            using Bitmap binary = threshold.MakeBinaryImage(bitmap, double.Parse(backgroundemoverWindow.BackGroundPart));
+
+            HighlightingConnectedComponent highlightingConnectedComponent = new();
+
+            highlightingConnectedComponent.HighlightComponent(binary, int.Parse(backgroundemoverWindow.BackX), int.Parse(backgroundemoverWindow.BackY));
+
+            BackGroundRemover function = new();
+            ImageResizer imageResizer = new();
+
+            bitmap = function.RemoveBackGround(binary, bitmap);
+            bitmap = imageResizer.ResizeImage(bitmap);
+
+            IntPtr hBitmap = bitmap.GetHbitmap();
+            BitmapImage retval;
+
+            using var memory = new MemoryStream();
+
+            bitmap.Save(memory, ImageFormat.Png);
+            memory.Position = 0;
+
+            var bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.StreamSource = memory;
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.EndInit();
+            bitmapImage.Freeze();
+
+            previousImage = image;
+            image = bitmapImage;
+            imageCrystal.Source = bitmapImage;
+        }
+
+        private void OnBinaryClicked(object sender, EventArgs e)
+        {
+            if (image is null)
+            {
+                MessageBox.Show("Изображение не найдено", "Необходимо загрузить изображение", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                return;
+            }
+
+            Binary binaryWindow = new Binary();
+
+            if (!binaryWindow.ShowDialog().Value)
             {
                 return;
             }
@@ -196,24 +256,11 @@ namespace ImageProcessing
 
             ThresholdFunction threshold = new();
 
-            using Bitmap binary = threshold.MakeBinaryImage(bitmap, double.Parse(backgroundemoverWindow.BackGroundPart));
-
-            HighlightingConnectedComponent highlightingConnectedComponent = new();
-
-            highlightingConnectedComponent.HighlightComponent(binary);
-;
-            BackGroundRemover function = new();
-            ImageResizer imageResizer = new();
-
-            bitmap = function.RemoveBackGround(binary, bitmap);
-            bitmap = imageResizer.ResizeImage(bitmap);
-
-            IntPtr hBitmap = bitmap.GetHbitmap();
-            BitmapImage retval;
+            using Bitmap binary = threshold.MakeBinaryImage(bitmap, double.Parse(binaryWindow.BackGroundPart));
 
             using var memory = new MemoryStream();
 
-            bitmap.Save(memory, ImageFormat.Png);
+            binary.Save(memory, ImageFormat.Png);
             memory.Position = 0;
 
             var bitmapImage = new BitmapImage();

@@ -588,7 +588,6 @@ namespace ImageProcessing
             page.Paragraphs.Add(text);
         }
 
-
         private void GetInformationClicked(object sender, EventArgs e)
         {
             MessageBox.Show(ApplicationConstants.Version, "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
