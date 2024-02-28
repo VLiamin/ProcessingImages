@@ -177,19 +177,19 @@ namespace ImageProcessing
                 return;
             }
 
-            BackGroundRemoverWindow backgroundemoverWindow = new BackGroundRemoverWindow();
-
-            if (!backgroundemoverWindow.ShowDialog().Value)
-            {
-                return;
-            }
-
             using MemoryStream outStream = new MemoryStream();
 
             BitmapEncoder enc = new BmpBitmapEncoder();
             enc.Frames.Add(BitmapFrame.Create(image));
             enc.Save(outStream);
             Bitmap bitmap = new Bitmap(outStream);
+
+            BackGroundRemoverWindow backgroundemoverWindow = new BackGroundRemoverWindow(bitmap.Width / 2, bitmap.Height / 2);
+
+            if (!backgroundemoverWindow.ShowDialog().Value)
+            {
+                return;
+            }
 
             Monochrome monochrome = new Monochrome();
             bitmap = monochrome.MakeMonochrome(bitmap);
@@ -200,7 +200,7 @@ namespace ImageProcessing
 
             HighlightingConnectedComponent highlightingConnectedComponent = new();
 
-            highlightingConnectedComponent.HighlightComponent(binary);
+            highlightingConnectedComponent.HighlightComponent(binary, int.Parse(backgroundemoverWindow.BackX), int.Parse(backgroundemoverWindow.BackY));
 
             BackGroundRemover function = new();
             ImageResizer imageResizer = new();
@@ -237,9 +237,9 @@ namespace ImageProcessing
                 return;
             }
 
-            BackGroundRemoverWindow backgroundRemoverWindow = new BackGroundRemoverWindow();
+            Binary binaryWindow = new Binary();
 
-            if (!backgroundRemoverWindow.ShowDialog().Value)
+            if (!binaryWindow.ShowDialog().Value)
             {
                 return;
             }
@@ -256,10 +256,7 @@ namespace ImageProcessing
 
             ThresholdFunction threshold = new();
 
-            using Bitmap binary = threshold.MakeBinaryImage(bitmap, double.Parse(backgroundRemoverWindow.BackGroundPart));
-
-/*            IntPtr hBitmap = binary.GetHbitmap();
-            BitmapImage retval;*/
+            using Bitmap binary = threshold.MakeBinaryImage(bitmap, double.Parse(binaryWindow.BackGroundPart));
 
             using var memory = new MemoryStream();
 

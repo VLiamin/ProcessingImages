@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImageProcessing.Windows"
         mc:Ignorable="d"
-        Title="Преобразование в двоичное изображение" Height="450" Width="800">
+        Title="Преобразование в двоичное изображение" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />

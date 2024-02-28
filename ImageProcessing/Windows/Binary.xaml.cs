@@ -28,5 +28,10 @@ namespace ImageProcessing.Windows
         {
             this.DialogResult = true;
         }
+
+        public string BackGroundPart
+        {
+            get { return backgroundPart.Text; }
+        }
     }
 }

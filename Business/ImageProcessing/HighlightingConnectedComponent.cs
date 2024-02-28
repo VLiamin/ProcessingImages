@@ -4,7 +4,7 @@ namespace RemoveBackGround;
 
 public class HighlightingConnectedComponent
 {
-    public void HighlightComponent(Bitmap oldImage)
+    public void HighlightComponent(Bitmap oldImage, int i, int j)
     {
         if (oldImage is null)
         {
@@ -13,36 +13,33 @@ public class HighlightingConnectedComponent
 
         List<(int i, int j)> values = new();
 
-        int i = oldImage.Width / 2;
-        int j = oldImage.Height / 2;
-
         int number = 0;
         int i0 = 0;
         int j0 = 0;
         while (true)
         {
-            if (oldImage.GetPixel(i + number, j).R == 0)
+            if (i + number < oldImage.Width && oldImage.GetPixel(i + number, j).R == 0)
             {
                 i0 = i + number;
                 j0 = j;
                 break;
             }
 
-            if (oldImage.GetPixel(i - number, j).R == 0)
+            if (i - number > 0 && oldImage.GetPixel(i - number, j).R == 0)
             {
                 i0 = i - number;
                 j0 = j;
                 break;
             }
 
-            if (oldImage.GetPixel(i, j + number).R == 0)
+            if (j + number < oldImage.Height && oldImage.GetPixel(i, j + number).R == 0)
             {
                 i0 = i;
                 j0 = j + number;
                 break;
             }
 
-            if (oldImage.GetPixel(i, j - number).R == 0)
+            if (j - number > 0 && oldImage.GetPixel(i, j - number).R == 0)
             {
                 i0 = i;
                 j0 = j - number;
