@@ -36,6 +36,7 @@
                 <MenuItem  Header="Фильтрация изображения" FontSize="17">
                     <MenuItem Header="Метод Лапласа" Click="OnLaplacianMethod" />
                     <MenuItem Header="Нерезкое маскирование" Click="OnIncreaseTrebleMethod" />
+                    <MenuItem Header="Бинаризация изображения" Click="OnBinaryClicked" />
                 </MenuItem>
                 <MenuItem Header="Помощь" FontSize="17" Click="OnHelpClicked" />
                 <MenuItem Header="Информация" FontSize="17" Click="GetInformationClicked"/>

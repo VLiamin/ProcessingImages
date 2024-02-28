@@ -201,7 +201,7 @@ namespace ImageProcessing
             HighlightingConnectedComponent highlightingConnectedComponent = new();
 
             highlightingConnectedComponent.HighlightComponent(binary);
-;
+
             BackGroundRemover function = new();
             ImageResizer imageResizer = new();
 
@@ -214,6 +214,56 @@ namespace ImageProcessing
             using var memory = new MemoryStream();
 
             bitmap.Save(memory, ImageFormat.Png);
+            memory.Position = 0;
+
+            var bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.StreamSource = memory;
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.EndInit();
+            bitmapImage.Freeze();
+
+            previousImage = image;
+            image = bitmapImage;
+            imageCrystal.Source = bitmapImage;
+        }
+
+        private void OnBinaryClicked(object sender, EventArgs e)
+        {
+            if (image is null)
+            {
+                MessageBox.Show("Изображение не найдено", "Необходимо загрузить изображение", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                return;
+            }
+
+            BackGroundRemoverWindow backgroundRemoverWindow = new BackGroundRemoverWindow();
+
+            if (!backgroundRemoverWindow.ShowDialog().Value)
+            {
+                return;
+            }
+
+            using MemoryStream outStream = new MemoryStream();
+
+            BitmapEncoder enc = new BmpBitmapEncoder();
+            enc.Frames.Add(BitmapFrame.Create(image));
+            enc.Save(outStream);
+            Bitmap bitmap = new Bitmap(outStream);
+
+            Monochrome monochrome = new Monochrome();
+            bitmap = monochrome.MakeMonochrome(bitmap);
+
+            ThresholdFunction threshold = new();
+
+            using Bitmap binary = threshold.MakeBinaryImage(bitmap, double.Parse(backgroundRemoverWindow.BackGroundPart));
+
+/*            IntPtr hBitmap = binary.GetHbitmap();
+            BitmapImage retval;*/
+
+            using var memory = new MemoryStream();
+
+            binary.Save(memory, ImageFormat.Png);
             memory.Position = 0;
 
             var bitmapImage = new BitmapImage();

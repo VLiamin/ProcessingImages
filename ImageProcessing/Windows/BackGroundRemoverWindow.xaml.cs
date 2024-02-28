@@ -7,9 +7,12 @@ namespace ImageProcessing.Windows
     /// </summary>
     public partial class BackGroundRemoverWindow : Window
     {
-        public BackGroundRemoverWindow()
+        public BackGroundRemoverWindow(int x, int y)
         {
             InitializeComponent();
+
+            X.Text = x;
+            y = y;
         }
 
         private void Accept_Click(object sender, RoutedEventArgs e)
