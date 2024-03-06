@@ -39,7 +39,7 @@
                     <MenuItem Header="Бинаризация изображения" Click="OnBinaryClicked" />
                 </MenuItem>
                 <MenuItem Header="Помощь" FontSize="17" Click="OnHelpClicked" />
-                <MenuItem Header="Информация" FontSize="17" Click="GetInformationClicked"/>
+                <MenuItem Header="О программе" FontSize="17" Click="GetInformationClicked"/>
             </Menu>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="40" >
