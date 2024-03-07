@@ -3,11 +3,11 @@
 namespace ImageProcessing.Windows
 {
     /// <summary>
-    /// Логика взаимодействия для Binary.xaml
+    /// Логика взаимодействия для RotateWindow.xaml
     /// </summary>
-    public partial class Binary : Window
+    public partial class RotateWindow : Window
     {
-        public Binary()
+        public RotateWindow()
         {
             InitializeComponent();
         }
@@ -17,9 +17,9 @@ namespace ImageProcessing.Windows
             this.DialogResult = true;
         }
 
-        public string BackGroundPart
+        public string AngleToRotate
         {
-            get { return backgroundPart.Text; }
+            get { return Angle.Text; }
         }
     }
 }

@@ -168,6 +168,52 @@ namespace ImageProcessing
             imageCrystal.Source = bitmapImage;
         }
 
+        private void OnRotateClicked(object sender, EventArgs e)
+        {
+            if (image is null)
+            {
+                MessageBox.Show("Изображение не найдено", "Необходимо загрузить изображение", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                return;
+            }
+
+            RotateWindow rotateWindow = new RotateWindow();
+
+            if (!rotateWindow.ShowDialog().Value)
+            {
+                return;
+            }
+
+            using MemoryStream outStream = new MemoryStream();
+
+            BitmapEncoder enc = new BmpBitmapEncoder();
+            enc.Frames.Add(BitmapFrame.Create(image));
+            enc.Save(outStream);
+            Bitmap bitmap = new Bitmap(outStream);
+
+            Business.ImageProcessing.Rotation rotation = new Business.ImageProcessing.Rotation();
+            bitmap = rotation.Rotate(bitmap, double.Parse(rotateWindow.AngleToRotate));
+
+            IntPtr hBitmap = bitmap.GetHbitmap();
+            BitmapImage retval;
+
+            using var memory = new MemoryStream();
+
+            bitmap.Save(memory, ImageFormat.Png);
+            memory.Position = 0;
+
+            var bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.StreamSource = memory;
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.EndInit();
+            bitmapImage.Freeze();
+
+            previousImage = image;
+            image = bitmapImage;
+            imageCrystal.Source = bitmapImage;
+        }
+
         private void OnRemoveBackGroundClicked(object sender, EventArgs e)
         {
             if (image is null)
