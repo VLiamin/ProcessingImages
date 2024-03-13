@@ -28,6 +28,12 @@
                     <MenuItem Header="Повернуть изображение"
                         Click="OnRotateClicked" />
                 </MenuItem>
+                <MenuItem Header="Структурные методы" FontSize="17">
+                    <MenuItem Header="Дилатация"
+                        Click="OnMakeDilatationClicked" />
+                    <MenuItem Header="Эрозия"
+                        Click="OnMakeErosionClicked" />
+                </MenuItem>
                 <MenuItem  Header="Выбор метода" FontSize="17">
                     <MenuItem Header="Размерность Минковского" Click="OnMinkowskiMethodCheckedChanged" />
                     <MenuItem Header="Локальная функция плотности" Click="OnDensityMethodCheckedChanged" />
@@ -58,7 +64,7 @@
         
             <StackPanel Grid.Row="1">
                 <TextBlock FontSize="32" HorizontalAlignment="Center" Margin="30">
-                Исследование кристаллов методами фрактального анализа
+                    Исследование кристаллов методами фрактального анализа
                 </TextBlock>
             </StackPanel>
 
