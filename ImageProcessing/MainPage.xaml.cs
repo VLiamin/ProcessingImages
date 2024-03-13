@@ -1,4 +1,5 @@
 ﻿using Business.ImageProcessing;
+using Dilatation;
 using ImageProcessing.Constants;
 using ImageProcessing.Enums;
 using ImageProcessing.Windows;
@@ -147,6 +148,84 @@ namespace ImageProcessing
 
             Monochrome monochrome = new Monochrome();
             bitmap = monochrome.MakeMonochrome(bitmap);
+
+            IntPtr hBitmap = bitmap.GetHbitmap();
+            BitmapImage retval;
+
+            using var memory = new MemoryStream();
+
+            bitmap.Save(memory, ImageFormat.Png);
+            memory.Position = 0;
+
+            var bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.StreamSource = memory;
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.EndInit();
+            bitmapImage.Freeze();
+
+            previousImage = image;
+            image = bitmapImage;
+            imageCrystal.Source = bitmapImage;
+        }
+
+        private void OnMakeDilatationClicked(object sender, EventArgs e)
+        {
+            if (image is null)
+            {
+                MessageBox.Show("Изображение не найдено", "Необходимо загрузить изображение", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                return;
+            }
+
+            using MemoryStream outStream = new MemoryStream();
+
+            BitmapEncoder enc = new BmpBitmapEncoder();
+            enc.Frames.Add(BitmapFrame.Create(image));
+            enc.Save(outStream);
+            Bitmap bitmap = new Bitmap(outStream);
+
+            HalftoneDilatation dilatation = new HalftoneDilatation();
+            bitmap = dilatation.MakeDilatation(bitmap, 1, true);
+
+            IntPtr hBitmap = bitmap.GetHbitmap();
+            BitmapImage retval;
+
+            using var memory = new MemoryStream();
+
+            bitmap.Save(memory, ImageFormat.Png);
+            memory.Position = 0;
+
+            var bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.StreamSource = memory;
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.EndInit();
+            bitmapImage.Freeze();
+
+            previousImage = image;
+            image = bitmapImage;
+            imageCrystal.Source = bitmapImage;
+        }
+
+        private void OnMakeErosionClicked(object sender, EventArgs e)
+        {
+            if (image is null)
+            {
+                MessageBox.Show("Изображение не найдено", "Необходимо загрузить изображение", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                return;
+            }
+
+            using MemoryStream outStream = new MemoryStream();
+
+            BitmapEncoder enc = new BmpBitmapEncoder();
+            enc.Frames.Add(BitmapFrame.Create(image));
+            enc.Save(outStream);
+            Bitmap bitmap = new Bitmap(outStream);
+
+            HalftoneDilatation dilatation = new HalftoneDilatation();
+            bitmap = dilatation.MakeDilatation(bitmap, 1, false);
 
             IntPtr hBitmap = bitmap.GetHbitmap();
             BitmapImage retval;
