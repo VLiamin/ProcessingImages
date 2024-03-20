@@ -8,10 +8,10 @@ using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Legends;
 using OxyPlot.Series;
-using OxyPlot.Wpf;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -184,15 +184,50 @@ namespace ImageProcessing
         {
             plot = new PlotModel { Title = $"Результат исследования методом \"Cпектр обобщенных размерностей Реньи\"" };
 
+            double maxQ = datas.Max(x => x.Q);
+            double maxD = datas.Max(x => x.Renyi);
+
+            double minQ = datas.Min(x => x.Q);
+            double minD = datas.Min(x => x.Renyi);
+
+            if (datas2 is not null)
+            {
+                double maxQ2 = datas2.Max(x => x.Q);
+                double maxD2 = datas2.Max(x => x.Renyi);
+
+                if (maxQ2 > maxQ)
+                {
+                    maxQ = maxQ2;
+                }
+
+                if (maxD2 > maxD)
+                {
+                    maxD = maxD2;
+                }
+
+                double minQ2 = datas2.Min(x => x.Q);
+                double minD2 = datas2.Min(x => x.Renyi);
+
+                if (minQ2 < minQ)
+                {
+                    minQ = minQ2;
+                }
+
+                if (minD2 < minD)
+                {
+                    minD = minD2;
+                }
+            }
+
             plot.Axes.Add(new LinearAxis
             {
                 Position = AxisPosition.Left,
-                Minimum = 1.8,
+                Minimum = minD - 0.05,
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,
                 MaximumPadding = 0,
                 MinimumPadding = 0,
-                Maximum = 2.2,
+                Maximum = maxD + 0.05,
                 MajorStep = 0.05,
                 MinorStep = 0.01,
                 Title = "D",
@@ -208,8 +243,8 @@ namespace ImageProcessing
                 MinorGridlineStyle = LineStyle.Dot,
                 MaximumPadding = 0,
                 MinimumPadding = 0,
-                Minimum = -3,
-                Maximum = 6,
+                Minimum = minQ - 0.5,
+                Maximum = maxQ + 0.5,
                 MajorStep = 1,
                 MinorStep = 0.25,
                 Title = "q",
@@ -252,6 +287,41 @@ namespace ImageProcessing
         {
             plot = new PlotModel { Title = $"Результат исследования препарата {preparationName1} методом \"Размерность Минковского\"" };
 
+            double maxLnA = datas.Max(x => x.LnA);
+            double maxLni= datas.Max(x => x.LnI);
+
+            double minLnA = datas.Min(x => x.LnA);
+            double minLni = datas.Min(x => x.LnI);
+
+            if (datas2 is not null)
+            {
+                double maxLnA2 = datas2.Max(x => x.LnA);
+                double maxLni2 = datas2.Max(x => x.LnI);
+
+                if (maxLnA2 > maxLnA)
+                {
+                    maxLnA = maxLnA2;
+                }
+
+                if (maxLni2 > maxLni)
+                {
+                    maxLni = maxLni2;
+                }
+
+                double minLnA2 = datas2.Min(x => x.LnA);
+                double minLni2 = datas2.Min(x => x.LnI);
+
+                if (minLnA2 < minLnA)
+                {
+                    minLnA = minLnA2;
+                }
+
+                if (minLni2 < minLni)
+                {
+                    minLni = minLni2;
+                }
+            }
+
             plot.Axes.Add(new LinearAxis
             {
                 Position = AxisPosition.Left,
@@ -259,8 +329,8 @@ namespace ImageProcessing
                 MinorGridlineStyle = LineStyle.Dot,
                 MaximumPadding = 0,
                 MinimumPadding = 1,
-                Minimum = 18,
-                Maximum = 21,
+                Minimum = minLnA - 0.5,
+                Maximum = maxLnA + 0.5,
                 MajorStep = 0.5,
                 MinorStep = 0.25,
                 Title = "ln(A)",
@@ -275,8 +345,8 @@ namespace ImageProcessing
                 MinorGridlineStyle = LineStyle.Dot,
                 MaximumPadding = 0,
                 MinimumPadding = 0,
-                Minimum = 0.5,
-                Maximum = 3.5,
+                Minimum = minLni - 0.5,
+                Maximum = maxLni + 0.5,
                 MajorStep = 0.5,
                 MinorStep = 0.25,
                 Title = "ln(delta)",
@@ -482,7 +552,7 @@ namespace ImageProcessing
                 Border = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.Black),
                 // Set the border for table cells
                 DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, .5f, Aspose.Pdf.Color.Black),
-                
+
             };
 
             table.DefaultCellTextState = new TextState(18);
