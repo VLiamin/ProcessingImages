@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Dilatation;
+namespace Business.ImageProcessing;
 
 public class Dilatation
 {

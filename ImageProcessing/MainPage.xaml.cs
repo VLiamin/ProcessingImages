@@ -1,5 +1,4 @@
 ﻿using Business.ImageProcessing;
-using Dilatation;
 using ImageProcessing.Constants;
 using ImageProcessing.Enums;
 using ImageProcessing.Windows;
@@ -27,6 +26,8 @@ namespace ImageProcessing
         private static Methods method;
         private static string drugName;
         private static string drugName0;
+
+        private bool isHalftoneDilatation = true;
 
         public MainPage()
         {
@@ -185,8 +186,16 @@ namespace ImageProcessing
             enc.Save(outStream);
             Bitmap bitmap = new Bitmap(outStream);
 
-            HalftoneDilatation dilatation = new HalftoneDilatation();
-            bitmap = dilatation.MakeDilatation(bitmap, 1, true);
+            if (isHalftoneDilatation)
+            {
+                HalftoneDilatation dilatationHalftone = new HalftoneDilatation();
+                bitmap = dilatationHalftone.MakeDilatation(bitmap, 1, true);
+            }
+            else
+            {
+                Dilatation dilatation = new Dilatation();
+                bitmap = dilatation.MakeDilatation(bitmap, 1, false);
+            }
 
             IntPtr hBitmap = bitmap.GetHbitmap();
             BitmapImage retval;
@@ -224,8 +233,17 @@ namespace ImageProcessing
             enc.Save(outStream);
             Bitmap bitmap = new Bitmap(outStream);
 
-            HalftoneDilatation dilatation = new HalftoneDilatation();
-            bitmap = dilatation.MakeDilatation(bitmap, 1, false);
+            if (isHalftoneDilatation)
+            {
+                HalftoneDilatation dilatationHalftone = new HalftoneDilatation();
+                bitmap = dilatationHalftone.MakeDilatation(bitmap, 1, false);
+            }
+            else
+            {
+                Dilatation dilatation = new Dilatation();
+                bitmap = dilatation.MakeDilatation(bitmap, 1, true);
+            }
+
 
             IntPtr hBitmap = bitmap.GetHbitmap();
             BitmapImage retval;
@@ -361,6 +379,8 @@ namespace ImageProcessing
 
                 return;
             }
+
+            isHalftoneDilatation = false;
 
             Binary binaryWindow = new Binary();
 
