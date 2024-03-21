@@ -11,7 +11,6 @@ using OxyPlot.Series;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -62,8 +61,8 @@ namespace ImageProcessing
 
                 BitmapEncoder enc2 = new BmpBitmapEncoder();
                 enc2.Frames.Add(BitmapFrame.Create(image2));
-                enc2.Save(outStream);
-                bitmap2 = new Bitmap(outStream);
+                enc2.Save(outStream2);
+                bitmap2 = new Bitmap(outStream2);
             }
 
             InitializeComponent();
@@ -288,7 +287,7 @@ namespace ImageProcessing
             plot = new PlotModel { Title = $"Результат исследования препарата {preparationName1} методом \"Размерность Минковского\"" };
 
             double maxLnA = datas.Max(x => x.LnA);
-            double maxLni= datas.Max(x => x.LnI);
+            double maxLni = datas.Max(x => x.LnI);
 
             double minLnA = datas.Min(x => x.LnA);
             double minLni = datas.Min(x => x.LnI);
