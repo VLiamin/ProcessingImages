@@ -150,9 +150,6 @@ namespace ImageProcessing
             Monochrome monochrome = new Monochrome();
             bitmap = monochrome.MakeMonochrome(bitmap);
 
-            IntPtr hBitmap = bitmap.GetHbitmap();
-            BitmapImage retval;
-
             using var memory = new MemoryStream();
 
             bitmap.Save(memory, ImageFormat.Png);
@@ -327,7 +324,7 @@ namespace ImageProcessing
             enc.Save(outStream);
             Bitmap bitmap = new Bitmap(outStream);
 
-            BackGroundRemoverWindow backgroundemoverWindow = new BackGroundRemoverWindow(bitmap.Width / 2, bitmap.Height / 2);
+            BackGroundRemoverWindow backgroundemoverWindow = new BackGroundRemoverWindow(bitmap.Width / 2, bitmap.Height / 2, image);
 
             if (!backgroundemoverWindow.ShowDialog().Value)
             {
