@@ -385,7 +385,7 @@ namespace ImageProcessing
 
         public void CreateDensityPlot(List<DensityData> datas, List<DensityData> datas2 = null)
         {
-            plot = new PlotModel { Title = $"Результат исследования методом \"Размерность Минковского\"" };
+            plot = new PlotModel { Title = $"Результат исследования методом \"Локальная функция плотности\"" };
 
             plot.Axes.Add(new LinearAxis
             {

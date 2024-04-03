@@ -8,7 +8,7 @@
         Title="Удаление фона изображения"  SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="160" />
+            <RowDefinition x:Name="WindowHeight" Height="180" />
             <RowDefinition Height="0" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -26,6 +26,13 @@
                 <Button IsDefault="True" Click="Accept_Click" MinWidth="60" Margin="0,0,10,0">OK</Button>
                 <Button IsCancel="True" MinWidth="60">Отмена</Button>
             </WrapPanel>
+            <Button x:Name="ImageButton" Content="Показать координаты на изображении" Click="ImageClicked" FontSize="14" Height="23" Margin="10"/>
+            <Image
+                x:Name="imageCrystal"
+                HorizontalAlignment="Center"
+                Width="250"
+                Margin="10"
+                Visibility="Collapsed"/>
         </StackPanel>
     </Grid>
 </Window>
