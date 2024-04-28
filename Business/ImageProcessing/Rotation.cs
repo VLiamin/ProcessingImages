@@ -18,8 +18,11 @@ namespace Business.ImageProcessing
             int x0 = oldImage.Width / 2;
             int y0 = oldImage.Height / 2;
 
-            int newWidth = (int)(oldImage.Width * Math.Abs(Math.Cos(angle)) + oldImage.Height * Math.Abs(Math.Sin(angle)));
-            int newHeight = (int)(oldImage.Width * Math.Abs(Math.Sin(angle)) + oldImage.Height * Math.Abs(Math.Cos(angle)));
+            double sin = Math.Sin(angle);
+            double cos = Math.Cos(angle);
+
+            int newWidth = (int)(oldImage.Width * Math.Abs(cos) + oldImage.Height * Math.Abs(sin));
+            int newHeight = (int)(oldImage.Width * Math.Abs(sin) + oldImage.Height * Math.Abs(cos));
 
             Bitmap image = new Bitmap(newWidth, newHeight);
 
@@ -27,8 +30,8 @@ namespace Business.ImageProcessing
             {
                 for (int j = 0; j < newHeight; j++)
                 {
-                    int x1 = (int)(x0 + (i - newWidth / 2) * Math.Cos(angle) - (j - newHeight / 2) * Math.Sin(angle));
-                    int y1 = (int)(y0 + (i - newWidth / 2) * Math.Sin(angle) + (j - newHeight / 2) * Math.Cos(angle));
+                    int x1 = (int)(x0 + (i - newWidth / 2) * cos - (j - newHeight / 2) * sin);
+                    int y1 = (int)(y0 + (i - newWidth / 2) * sin + (j - newHeight / 2) * cos);
 
                     if (x1 >= 0 && x1 < oldImage.Width && y1 >= 0 && y1 < oldImage.Height)
                     {

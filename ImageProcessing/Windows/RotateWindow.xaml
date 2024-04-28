@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock>Укажите угол поворот изображения в диапазоне [-180; 180]</TextBlock>
-        <TextBox Name="Angle" Grid.Row="1" MinWidth="250">0,4</TextBox>
+        <TextBox Name="Angle" Grid.Row="1" MinWidth="250">30</TextBox>
 
         <WrapPanel Grid.Row="2" HorizontalAlignment="Right" Margin="0,15,0,0">
             <Button IsDefault="True" Click="Accept_Click" MinWidth="60" Margin="0,0,10,0">OK</Button>
