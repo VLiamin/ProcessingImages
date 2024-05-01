@@ -387,6 +387,22 @@ namespace ImageProcessing
         {
             plot = new PlotModel { Title = $"Результат исследования методом \"Локальная функция плотности\"" };
 
+            double minq = datas.First().q;
+            double maxq = datas.Last().q;
+
+            if (datas2 is not null)
+            {
+                if (datas2.First().q < minq)
+                {
+                    minq = datas2.First().q;
+                }
+
+                if (datas2.Last().q > maxq)
+                {
+                    maxq = datas2.Last().q;
+                }
+            }
+
             plot.Axes.Add(new LinearAxis
             {
                 Position = AxisPosition.Left,
@@ -410,8 +426,8 @@ namespace ImageProcessing
                 MinorGridlineStyle = LineStyle.Dot,
                 MaximumPadding = 0,
                 MinimumPadding = 0,
-                Minimum = 4,
-                Maximum = 5.7,
+                Minimum = minq - 0.1,
+                Maximum = maxq + 0.1,
                 MajorStep = 0.3,
                 MinorStep = 0.1,
                 Title = "q",
